@@ -1,0 +1,17 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "Eclipse BP",
+		"description": "Stranded",
+		"uuid": "65a707a4-eef1-4c51-9a76-730df4638be7",
+		"version": [ 1, 0, 0 ],
+		"min_engine_version": [ 1, 19, 60 ]
+	},
+	"modules": [
+		{
+			"type": "data",
+			"uuid": "4054511e-2cc3-4294-8c8f-1a7bfe8ab2d6",
+			"version": [ 1, 0, 0 ]
+		}
+	]
+}

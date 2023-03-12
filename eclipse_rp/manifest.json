@@ -1,0 +1,17 @@
+{
+	"format_version": 2,
+	"header": {
+		"name": "Eclipse RP",
+		"description": "Stranded",
+		"uuid": "3530bfa3-7530-4583-8712-22962f95055d",
+		"version": [ 1, 0, 0 ],
+		"min_engine_version": [ 1, 19, 60 ]
+	},
+	"modules": [
+		{
+			"type": "resources",
+			"uuid": "bc3d4bdc-3ff4-4093-b8fd-b060c3dacf81",
+			"version": [ 1, 0, 0 ]
+		}
+	]
+}
