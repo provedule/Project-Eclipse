@@ -1,0 +1,87 @@
+{
+  "format_version": "1.19.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lunar:regolith",
+      "menu_category": {
+        "category": "nature",
+        "is_hidden_in_commands": false
+      },
+      "properties": {
+        "lunar:type": [ 0, 1, 2 ]
+      }
+    },
+    "components": {
+      "minecraft:unit_cube": {},
+      "minecraft:on_player_placing": {
+        "event": "lunar:set_type",
+        "target": "self"
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "regolith_0",
+          "render_method": "opaque"
+        }
+      }
+    },
+    "events": {
+      "lunar:set_type": {
+        "randomize": [
+          {
+            "weight": 5,
+            "set_block_property": {
+              "lunar:type": 0
+            }
+          },
+          {
+            "weight": 2,
+            "set_block_property": {
+              "lunar:type": 1
+            }
+          },
+          {
+            "weight": 1,
+            "set_block_property": {
+              "lunar:type": 2
+            }
+          }
+        ]
+      }
+    },
+    "permutations": [
+      {
+        "condition": "query.block_property('lunar:type') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "regolith_0",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "query.block_property('lunar:type') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "regolith_1",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "query.block_property('lunar:type') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "regolith_2",
+              "render_method": "opaque"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
