@@ -1,0 +1,39 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.ai.idle_spin": {
+			"loop": true,
+			"animation_length": 50,
+			"bones": {
+				"bone": {
+					"rotation": ["math.sin(q.life_time)*1000 ", "math.sin(q.life_time)*1000", "math.sin(q.life_time)*1000"],
+					"position": [0, 0, 0]
+				},
+				"bone2": {
+					"rotation": ["math.sin(q.life_time)*3000", "math.sin(q.life_time)*4000", "math.sin(q.life_time)*3000"],
+					"position": [0, 0, 0]
+				},
+				"bone3": {
+					"rotation": ["math.sin(q.life_time)*3500", "math.sin(q.life_time)*3500", "math.sin(q.life_time)*3500"]
+				}
+			}
+		},
+		"idle spin": {
+			"loop": true,
+			"animation_length": 50,
+			"bones": {
+				"bone": {
+					"rotation": ["math.sin(q.life_time)*1000 ", "math.sin(q.life_time)*1000", "math.sin(q.life_time)*1000"],
+					"position": [0, 0, 0]
+				},
+				"bone2": {
+					"rotation": ["math.sin(q.life_time)*3000", "math.sin(q.life_time)*4000", "math.sin(q.life_time)*3000"],
+					"position": [0, 0, 0]
+				},
+				"bone3": {
+					"rotation": ["math.sin(q.life_time)*3500", "math.sin(q.life_time)*3500", "math.sin(q.life_time)*3500"]
+				}
+			}
+		}
+	}
+}
