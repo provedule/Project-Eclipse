@@ -12,6 +12,52 @@
     },
     "regolith_2": {
       "textures": "textures/blocks/regolith/regolith_2"
+    },
+    "regolith_3": {
+      "textures": "textures/blocks/regolith/regolith_3"
+    },
+
+    "basaltic_regolith_0": {
+      "textures": "textures/blocks/basaltic_regolith/basaltic_regolith_0"
+    },
+    "basaltic_regolith_1": {
+      "textures": "textures/blocks/basaltic_regolith/basaltic_regolith_1"
+    },
+    "basaltic_regolith_2": {
+      "textures": "textures/blocks/basaltic_regolith/basaltic_regolith_2"
+    },
+    "basaltic_regolith_3": {
+      "textures": "textures/blocks/basaltic_regolith/basaltic_regolith_3"
+    },
+
+    "solar_panel": {
+      "textures": "textures/blocks/solar_panel/solar_panel"
+    },
+    "solar_panel_both": {
+      "textures": "textures/blocks/solar_panel/solar_panel_both"
+    },
+    "solar_panel_single": {
+      "textures": "textures/blocks/solar_panel/solar_panel_single"
+    },
+    "solar_panel_right": {
+      "textures": "textures/blocks/solar_panel/solar_panel_right"
+    },
+    "solar_panel_left": {
+      "textures": "textures/blocks/solar_panel/solar_panel_left"
+    },
+
+    "meteorite": {
+      "textures": "textures/blocks/meteorite"
+    },
+    "meteoric_iron_ore": {
+      "textures": "textures/blocks/meteoric_iron_ore"
+    },
+    "frozen_meteoric_iron_ore": {
+      "textures": "textures/blocks/frozen_meteoric_iron_ore"
+    },
+
+    "carbon_processor": {
+      "textures": "textures/blocks/carbon_processor"
     }
   }
 }
