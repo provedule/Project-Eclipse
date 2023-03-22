@@ -1,0 +1,115 @@
+{
+  "format_version": "1.19.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lunar:carbon_processor",
+      "menu_category": {
+        "category": "items",
+        "is_hidden_in_commands": false
+      },
+      "properties": {
+        "lunar:rotation": [ 2, 3, 4, 5 ],
+        "lunar:carbon": [ 0, 1, 2, 3 ],
+        "lunar:regolith": [ 0, 1, 2, 3 ]
+      }
+    },
+    "components": {
+      "tag:solar_panel": {},
+      "minecraft:geometry": "geometry.carbon_processor",
+      "minecraft:on_player_placing": {
+        "event": "lunar:place"
+      },
+      "minecraft:on_interact": {
+        "event": "lunar:interact",
+        "target": "self",
+        "condition": "query.is_item_name_any('slot.weapon.mainhand', 0, 'lunar:regolith') || query.block_property('lunar:carbon') != 0"
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "carbon_processor",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:queued_ticking": {
+        "looping": true,
+        "interval_range": [ 40, 40 ],
+        "on_tick": {
+          "event": "lunar:make_carbon"
+        }
+      },
+      "minecraft:part_visibility": {
+        "conditions": {
+          "material_0": "q.block_property('lunar:regolith') == 0",
+          "material_1": "q.block_property('lunar:regolith') == 1",
+          "material_2": "q.block_property('lunar:regolith') == 2",
+          "material_3": "q.block_property('lunar:regolith') == 3",
+
+          "product_0": "q.block_property('lunar:carbon') == 0",
+          "product_1": "q.block_property('lunar:carbon') == 1",
+          "product_2": "q.block_property('lunar:carbon') == 2",
+          "product_3": "q.block_property('lunar:carbon') == 3"
+        }
+      }
+    },
+    "events": {
+      "lunar:interact": {
+        "sequence": [
+          {
+            "condition": "query.is_item_name_any('slot.weapon.mainhand', 0, 'lunar:regolith') && query.block_property('lunar:regolith') < 3",
+            "set_block_property": {
+              "lunar:regolith": "query.block_property('lunar:regolith')+1"
+            }
+          },
+          {
+            "condition": "!query.is_item_name_any('slot.weapon.mainhand', 0, 'lunar:regolith') && query.block_property('lunar:carbon') > 0",
+            "set_block_property": {
+              "lunar:carbon": "query.block_property('lunar:carbon')-1"
+            }
+          }
+        ]
+      },
+      "lunar:place": {
+        "set_block_property": {
+          "lunar:rotation": "query.cardinal_facing_2d"
+        }
+      },
+      "lunar:make_carbon": {
+        "sequence": [
+          {
+            "condition": "query.block_property('lunar:carbon') < 3 && query.block_property('lunar:regolith') == 3",
+            "set_block_property": {
+              "lunar:regolith": 0
+            }
+          },
+          {
+            "condition": "query.block_property('lunar:carbon') < 3 && query.block_property('lunar:regolith') == 3",
+            "set_block_property": {
+              "lunar:carbon": "query.block_property('lunar:carbon')+1"
+            }
+          }
+        ]
+      }
+    },
+    "permutations": [
+
+      {
+        "condition": "query.block_property('lunar:rotation') == 3",
+        "components": {
+          "minecraft:rotation": [ 0, 180, 0 ]
+        }
+      },
+      {
+        "condition": "query.block_property('lunar:rotation') == 4",
+        "components": {
+          "minecraft:rotation": [ 0, 90, 0 ]
+        }
+      },
+      {
+        "condition": "query.block_property('lunar:rotation') == 5",
+        "components": {
+          "minecraft:rotation": [ 0, 270, 0 ]
+        }
+      }
+    ]
+  }
+}

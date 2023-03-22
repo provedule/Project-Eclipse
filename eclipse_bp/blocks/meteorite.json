@@ -1,0 +1,21 @@
+{
+  "format_version": "1.19.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lunar:meteorite",
+      "menu_category": {
+        "category": "nature",
+        "is_hidden_in_commands": false
+      }
+    },
+    "components": {
+      "minecraft:unit_cube": {},
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "meteorite",
+          "render_method": "opaque"
+        }
+      }
+    }
+  }
+}

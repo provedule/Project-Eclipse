@@ -1,0 +1,240 @@
+{
+  "format_version": "1.19.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lunar:solar_panel",
+      "menu_category": {
+        "category": "items",
+        "is_hidden_in_commands": false
+      },
+      "properties": {
+        "lunar:rotation": [ 2, 3, 4, 5 ],
+        "lunar:right": [ 0, 1 ],
+        "lunar:left": [ 0, 1 ]
+      }
+    },
+    "components": {
+      "tag:solar_panel": {},
+      "minecraft:geometry": "geometry.solar_panel",
+      "minecraft:on_player_placing": {
+        "event": "lunar:place"
+      },
+      "minecraft:selection_box": {
+        "origin": [ -8, 0, -8 ],
+        "size": [ 16, 6, 16 ]
+      },
+      "minecraft:collision_box": {
+        "origin": [ -8, 0, -8 ],
+        "size": [ 16, 6, 16 ]
+      },
+      "minecraft:queued_ticking": {
+        "looping": true,
+        "interval_range": [ 5, 5 ],
+        "on_tick": {
+          "event": "lunar:check"
+        }
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "solar_panel",
+          "render_method": "opaque"
+        },
+        "panel_top": {
+          "texture": "solar_panel_single",
+          "render_method": "opaque"
+        }
+      }
+    },
+    "events": {
+      "lunar:check": {
+        "sequence": [
+          {
+            "condition": "query.block_property('lunar:rotation') == 2 && query.block_neighbor_has_any_tag(-1,0,0,'solar_panel')",
+            "set_block_property": {
+              "lunar:right": 1
+            }
+          },
+          {
+            "condition": "query.block_property('lunar:rotation') == 2 && !query.block_neighbor_has_any_tag(-1,0,0,'solar_panel')",
+            "set_block_property": {
+              "lunar:right": 0
+            }
+          },
+          {
+            "condition": "query.block_property('lunar:rotation') == 2 && query.block_neighbor_has_any_tag(1,0,0,'solar_panel')",
+            "set_block_property": {
+              "lunar:left": 1
+            }
+          },
+          {
+            "condition": "query.block_property('lunar:rotation') == 2 && !query.block_neighbor_has_any_tag(1,0,0,'solar_panel')",
+            "set_block_property": {
+              "lunar:left": 0
+            }
+          },
+
+          {
+            "condition": "query.block_property('lunar:rotation') == 3 && query.block_neighbor_has_any_tag(1,0,0,'solar_panel')",
+            "set_block_property": {
+              "lunar:right": 1
+            }
+          },
+          {
+            "condition": "query.block_property('lunar:rotation') == 3 && !query.block_neighbor_has_any_tag(1,0,0,'solar_panel')",
+            "set_block_property": {
+              "lunar:right": 0
+            }
+          },
+          {
+            "condition": "query.block_property('lunar:rotation') == 3 && query.block_neighbor_has_any_tag(-1,0,0,'solar_panel')",
+            "set_block_property": {
+              "lunar:left": 1
+            }
+          },
+          {
+            "condition": "query.block_property('lunar:rotation') == 3 && !query.block_neighbor_has_any_tag(-1,0,0,'solar_panel')",
+            "set_block_property": {
+              "lunar:left": 0
+            }
+          },
+
+          {
+            "condition": "query.block_property('lunar:rotation') == 4 && query.block_neighbor_has_any_tag(0,0,1,'solar_panel')",
+            "set_block_property": {
+              "lunar:right": 1
+            }
+          },
+          {
+            "condition": "query.block_property('lunar:rotation') == 4 && !query.block_neighbor_has_any_tag(0,0,1,'solar_panel')",
+            "set_block_property": {
+              "lunar:right": 0
+            }
+          },
+          {
+            "condition": "query.block_property('lunar:rotation') == 4 && query.block_neighbor_has_any_tag(0,0,-1,'solar_panel')",
+            "set_block_property": {
+              "lunar:left": 1
+            }
+          },
+          {
+            "condition": "query.block_property('lunar:rotation') == 4 && !query.block_neighbor_has_any_tag(0,0,-1,'solar_panel')",
+            "set_block_property": {
+              "lunar:left": 0
+            }
+          },
+
+          {
+            "condition": "query.block_property('lunar:rotation') == 5 && query.block_neighbor_has_any_tag(0,0,-1,'solar_panel')",
+            "set_block_property": {
+              "lunar:right": 1
+            }
+          },
+          {
+            "condition": "query.block_property('lunar:rotation') == 5 && !query.block_neighbor_has_any_tag(0,0,-1,'solar_panel')",
+            "set_block_property": {
+              "lunar:right": 0
+            }
+          },
+          {
+            "condition": "query.block_property('lunar:rotation') == 5 && query.block_neighbor_has_any_tag(0,0,1,'solar_panel')",
+            "set_block_property": {
+              "lunar:left": 1
+            }
+          },
+          {
+            "condition": "query.block_property('lunar:rotation') == 5 && !query.block_neighbor_has_any_tag(0,0,1,'solar_panel')",
+            "set_block_property": {
+              "lunar:left": 0
+            }
+          }
+        ]
+      },
+      "lunar:place": {
+        "set_block_property": {
+          "lunar:rotation": "query.cardinal_facing_2d"
+        }
+      }
+    },
+    "permutations": [
+      {
+        "condition": "query.block_property('lunar:left') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "solar_panel",
+              "render_method": "opaque"
+            },
+            "panel_top": {
+              "texture": "solar_panel_left",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "query.block_property('lunar:right') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "solar_panel",
+              "render_method": "opaque"
+            },
+            "panel_top": {
+              "texture": "solar_panel_right",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "query.block_property('lunar:right') == 1 && query.block_property('lunar:left') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "solar_panel",
+              "render_method": "opaque"
+            },
+            "panel_top": {
+              "texture": "solar_panel_both",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "query.block_property('lunar:right') == 0 && query.block_property('lunar:left') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "solar_panel",
+              "render_method": "opaque"
+            },
+            "panel_top": {
+              "texture": "solar_panel_single",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+
+      {
+        "condition": "query.block_property('lunar:rotation') == 3",
+        "components": {
+          "minecraft:rotation": [ 0, 180, 0 ]
+        }
+      },
+      {
+        "condition": "query.block_property('lunar:rotation') == 4",
+        "components": {
+          "minecraft:rotation": [ 0, 90, 0 ]
+        }
+      },
+      {
+        "condition": "query.block_property('lunar:rotation') == 5",
+        "components": {
+          "minecraft:rotation": [ 0, 270, 0 ]
+        }
+      }
+    ]
+  }
+}
