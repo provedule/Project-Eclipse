@@ -1,0 +1,117 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "test:meteor",
+      "is_spawnable": false,
+      "is_summonable": false,
+      "is_experimental": false
+    },
+
+    "component_groups": {
+      "meteor:5x5": {
+        "minecraft:collision_box": {
+          "height": 5,
+          "width": 5
+        }
+      },
+      "meteor:7x7": {
+        "minecraft:collision_box": {
+          "height": 7,
+          "width": 7
+        }
+      },
+      "meteor:10x10": {
+        "minecraft:collision_box": {
+          "height": 10,
+          "width": 10
+        }
+      },
+      "minecraft:exploding": {
+        "minecraft:explode": {
+          "fuse_length": 0,
+          "fuse_lit": true,
+          "power": 5,
+          "causes_fire": true,
+          "breaks_blocks": true,
+          "fire_affected_by_griefing": true,
+          "destroy_affected_by_griefing": true
+        }
+      }
+    },
+
+    "components": {
+      "minecraft:projectile": {
+        "on_hit": {
+          "impact_damage": {
+            "damage": 6,
+            "knockback": false,
+            "semi_random_diff_damage": false
+          },
+          "definition_event": {
+            "affect_projectile": true,
+            "event_trigger": {
+              "event": "minecraft:explode",
+              "target": "self"
+            }
+          }
+        },
+        "power": 1.6,
+        "gravity": 0.0,
+        "inertia": 1,
+        "liquid_inertia": 1,
+        "uncertainty_base": 0,
+        "uncertainty_multiplier": 0,
+        "anchor": 1,
+        "offset": [0, -0.1, 0],
+        "reflect_on_hurt": true,
+        "catch_fire": true
+      },
+      "minecraft:physics": {},
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
+      },
+      "minecraft:conditional_bandwidth_optimization": {
+        "default_values": {
+          "max_optimized_distance": 80.0,
+          "max_dropped_ticks": 7,
+          "use_motion_prediction_hints": true
+        }
+      }
+    },
+    "events": {
+      "minecraft:entity_spawned": {
+      },
+      "transform:5x5": {
+        "add": {
+          "component_groups": [ "meteor:5x5" ]
+        },
+        "remove": {
+          "component_groups": [ "meteor:7x7", "meteor:10x10" ]
+        }
+      },
+      "transform:7x7": {
+        "add": {
+          "component_groups": [ "meteor:7x7" ]
+        },
+        "remove": {
+          "component_groups": [ "meteor:5x5", "meteor:10x10" ]
+        }
+      },
+      "transform:10x10": {
+        "add": {
+          "component_groups": [ "meteor:10x10" ]
+        },
+        "remove": {
+          "component_groups": [ "meteor:7x7", "meteor:5x5" ]
+        }
+      },
+      "minecraft:explode": {
+        "add": {
+          "component_groups": ["minecraft:exploding"]
+        }
+      }
+    }
+  }
+}
