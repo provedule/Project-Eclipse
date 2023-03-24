@@ -1,6 +1,6 @@
 import { world, system, MolangVariableMap, MinecraftBlockTypes, Player } from "@minecraft/server";
-import { ActionFormData, MessageFormData, ModalFormData } from "./Forms/Forms.js";
-import { Button, Dropdown, DropdownOption, Slider, TextField, Toggle } from "./Forms/Components.js";
+import { ActionFormData } from "./Forms/Forms.js";
+import { Button } from "./Forms/Components.js";
 system.runInterval(
     () => {
         for (const player of world.getAllPlayers()) {
@@ -293,7 +293,7 @@ const build = ( player, block, l, r, n, s ) => {
 	if (player.hasTag("inUI")) return;
 	
 	player.addTag("inUI");
-    new ActionFormData({ title: "Test" })
+    new ActionFormData({ title: "Choose a Structure" })
     .addButtons([
         new Button({
             id: "platform",
