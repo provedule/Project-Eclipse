@@ -1,4 +1,4 @@
-import { world, system, MolangVariableMap } from "@minecraft/server";
+import { world, system, MolangVariableMap, MinecraftBlockTypes, Player } from "@minecraft/server";
 import { ActionFormData, MessageFormData, ModalFormData } from "./Forms/Forms.js";
 import { Button, Dropdown, DropdownOption, Slider, TextField, Toggle } from "./Forms/Components.js";
 system.runInterval(
@@ -297,11 +297,11 @@ const build = ( player, block, l, r, n, s ) => {
     .addButtons([
         new Button({
             id: "platform",
-            text: "Platform",
+            text: "Platform\n x8 +  x16",
         }),
 		new Button({
             id: "stairs",
-            text: "Stairs",
+            text: "Stairs\n x16 +  x32",
         }),
     ])
     .open(player)
@@ -311,64 +311,92 @@ const build = ( player, block, l, r, n, s ) => {
             if(response.canceled) return;
             switch(response.selection.customId) {
                 case "platform":
-                    if(l) {
+					if (
+						player.getItemCount( "minecraft:log" ) < 8
+						|| player.getItemCount( "minecraft:stick" ) < 16
+					) return player.sendMessage( "§cNot enough items!§r" );
+					
+					block.setType(MinecraftBlockTypes.air);
+					
+					player.runCommandAsync( "clear @s log 0 8" );
+					player.runCommandAsync( "clear @s stick 0 16" );
+					
+                    if (l) {
                         player.runCommandAsync(
                             "structure load platform_l "
                             + block.location.x + " "
                             + (block.location.y - 1) + " "
                             + (block.location.z - 2)
+							+ " 0_degrees none block_by_block 5"
                         );
-                    } else if(r) {
+                    } else if (r) {
                         player.runCommandAsync(
                             "structure load platform_r "
                             + (block.location.x - 4) + " "
                             + (block.location.y - 1) + " "
                             + (block.location.z - 2)
+							+ " 0_degrees none block_by_block 5"
                         );
-                    } else if(n) {
+                    } else if (n) {
                         player.runCommandAsync(
                             "structure load platform_n "
                             + (block.location.x - 2) + " "
                             + (block.location.y - 1) + " "
                             + block.location.z
+							+ " 0_degrees none block_by_block 5"
                         );
-                    } else if(s) {
+                    } else if (s) {
                         player.runCommandAsync(
                             "structure load platform_s "
                             + (block.location.x - 2) + " "
                             + (block.location.y - 1) + " "
                             + (block.location.z - 4)
+							+ " 0_degrees none block_by_block 5"
                         );
                     };
                 break;
 				case "stairs":
-                    if(l) {
+					if (
+						player.getItemCount( "minecraft:log" ) < 8
+						|| player.getItemCount( "minecraft:stick" ) < 16
+					) return player.sendMessage( "§cNot enough items!§r" );
+					
+					block.setType(MinecraftBlockTypes.air);
+					
+					player.runCommandAsync( "clear @s log 0 16" );
+					player.runCommandAsync( "clear @s stick 0 32" );
+					
+                    if (l) {
                         player.runCommandAsync(
                             "structure load stairs_l "
                             + block.location.x + " "
                             + (block.location.y - 1) + " "
                             + (block.location.z - 2)
+							+ " 0_degrees none block_by_block 5"
                         );
-                    } else if(r) {
+                    } else if (r) {
                         player.runCommandAsync(
                             "structure load stairs_r "
                             + (block.location.x - 4) + " "
                             + (block.location.y - 1) + " "
                             + (block.location.z - 2)
+							+ " 0_degrees none block_by_block 5"
                         );
-                    } else if(n) {
+                    } else if (n) {
                         player.runCommandAsync(
                             "structure load stairs_n "
                             + (block.location.x - 2) + " "
                             + (block.location.y - 1) + " "
                             + block.location.z
+							+ " 0_degrees none block_by_block 5"
                         );
-                    } else if(s) {
+                    } else if (s) {
                         player.runCommandAsync(
                             "structure load stairs_s "
                             + (block.location.x - 2) + " "
                             + (block.location.y - 1) + " "
                             + (block.location.z - 4)
+							+ " 0_degrees none block_by_block 5"
                         );
                     };
                 break;
@@ -474,4 +502,17 @@ function spawnEdgeParticles(a, b, dimension, effectName) {
 			);
 		};
 	};
+};
+
+Player.prototype.getItemCount = function( itemId ) {
+	if (!itemId) return 0;
+	
+	const inventory = this.getComponent( "minecraft:inventory" ).container;
+	let itemCount = 0;
+	for (let i = 0; i < inventory.size; i++) {
+		const item = inventory.getItem(i);
+		if (item?.typeId == itemId) itemCount += item.amount;
+	};
+	
+	return itemCount;
 };
