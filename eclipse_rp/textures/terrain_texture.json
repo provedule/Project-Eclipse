@@ -4,6 +4,9 @@
   "padding": 8,
   "num_mip_levels": 4,
   "texture_data": {
+    "structure_builder" : {
+      "textures" : "textures/blocks/structure_builder"
+    },
     "regolith_0": {
       "textures": "textures/blocks/regolith/regolith_0"
     },
