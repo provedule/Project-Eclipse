@@ -1,10 +1,10 @@
 {
-  "format_version": "1.12.0",
+  "format_version": "1.16.0",
   "minecraft:entity": {
     "description": {
-      "identifier": "test:meteor",
+      "identifier": "eclipse:meteor",
       "is_spawnable": false,
-      "is_summonable": false,
+      "is_summonable": true,
       "is_experimental": false
     },
 
@@ -33,7 +33,6 @@
           "fuse_lit": true,
           "power": 5,
           "causes_fire": true,
-          "breaks_blocks": true,
           "fire_affected_by_griefing": true,
           "destroy_affected_by_griefing": true
         }
@@ -56,6 +55,7 @@
             }
           }
         },
+        "angle_offset": -20,
         "power": 1.6,
         "gravity": 0.0,
         "inertia": 1,
@@ -82,6 +82,20 @@
     },
     "events": {
       "minecraft:entity_spawned": {
+        "randomize": [
+          {
+            "weight": 1,
+            "trigger": "transform:5x5"
+          },
+          {
+            "weight": 1,
+            "trigger": "transform:7x7"
+          },
+          {
+            "weight": 1,
+            "trigger": "transform:10x10"
+          }
+        ]
       },
       "transform:5x5": {
         "add": {

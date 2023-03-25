@@ -10,6 +10,7 @@
 	"modules": [
 		{
 			"type": "resources",
+			"description": "",
 			"uuid": "bc3d4bdc-3ff4-4093-b8fd-b060c3dacf81",
 			"version": [ 1, 0, 0 ]
 		}

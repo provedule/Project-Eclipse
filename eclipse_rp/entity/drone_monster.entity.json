@@ -1,0 +1,44 @@
+{
+	"format_version": "1.10.0",
+	"minecraft:client_entity": {
+		"description": {
+			"identifier": "eclipse:drone_monster",
+			"materials": {
+				"default": "phantom"
+			},
+			"textures": {
+				"default": "textures/entity/phantom"
+			},
+			"geometry": {
+				"default": "geometry.phantom"
+			},
+			"scripts": {
+				"initialize": [
+					"variable.runtimeid = 0;",
+					"variable.tailrotx = -5.0;",
+					"variable.wingrotz = 0.0;"
+				],
+				"animate": [
+					"phantom_base_pose_controller",
+					"move"
+				]
+			},
+			"animations": {
+				"phantom_base_pose": "animation.phantom.base_pose",
+				"phantom_base_pose_controller": "controller.animation.phantom.base_pose",
+				"move": "animation.phantom.move"
+			},
+			"particle_effects": {
+				"wing_dust": "minecraft:phantom_trail_particle"
+			},
+			"sound_effects": {
+				"flap": "mob.phantom.flap"
+			},
+			"render_controllers": [ "controller.render.drone_monster" ],
+			"spawn_egg": {
+				"texture": "spawn_egg",
+				"texture_index": 51
+			}
+		}
+	}
+}
