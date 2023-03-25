@@ -1,0 +1,21 @@
+{
+  "format_version": "1.19.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lunar:brushed_steel",
+      "menu_category": {
+        "category": "construction",
+        "is_hidden_in_commands": false
+      }
+    },
+    "components": {
+      "minecraft:unit_cube": {},
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "brushed_steel",
+          "render_method": "opaque"
+        }
+      }
+    }
+  }
+}

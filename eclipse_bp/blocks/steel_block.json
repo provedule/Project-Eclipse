@@ -1,0 +1,21 @@
+{
+  "format_version": "1.19.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lunar:steel_block",
+      "menu_category": {
+        "category": "construction",
+        "is_hidden_in_commands": false
+      }
+    },
+    "components": {
+      "minecraft:unit_cube": {},
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "steel_block",
+          "render_method": "opaque"
+        }
+      }
+    }
+  }
+}

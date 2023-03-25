@@ -61,6 +61,41 @@
 
     "carbon_processor": {
       "textures": "textures/blocks/carbon_processor"
+    },
+
+    "brushed_steel": {
+      "textures": "textures/blocks/brushed_steel"
+    },
+    "steel_sheet": {
+      "textures": "textures/blocks/steel_sheet"
+    },
+    "steel_block": {
+      "textures": "textures/blocks/steel_block"
+    },
+
+    "lunar_stone": {
+      "textures": "textures/blocks/lunar_stone"
+    },
+    "lunar_gold_ore": {
+      "textures": "textures/blocks/lunar_gold_ore"
+    },
+    "lunar_platinum_ore": {
+      "textures": "textures/blocks/lunar_platinum_ore"
+    },
+    "lunar_titanium_ore": {
+      "textures": "textures/blocks/lunar_titanium_ore"
+    },
+    "lunar_copper_ore": {
+      "textures": "textures/blocks/lunar_copper_ore"
+    },
+    "lunar_tin_ore": {
+      "textures": "textures/blocks/lunar_tin_ore"
+    },
+    "lunar_lead_ore": {
+      "textures": "textures/blocks/lunar_lead_ore"
+    },
+    "lunar_uranium_ore": {
+      "textures": "textures/blocks/lunar_uranium_ore"
     }
   }
 }

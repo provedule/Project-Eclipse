@@ -8,12 +8,12 @@
         "is_hidden_in_commands": false
       },
       "properties": {
-        "lunar:type": [ 0, 1, 2 ]
+        "lunar:type": [ 0, 1, 2, 3 ]
       }
     },
     "components": {
       "minecraft:unit_cube": {},
-      "minecraft:on_player_placing": {
+      "minecraft:on_placed": {
         "event": "lunar:set_type",
         "target": "self"
       },
@@ -40,9 +40,15 @@
             }
           },
           {
-            "weight": 1,
+            "weight": 2,
             "set_block_property": {
               "lunar:type": 2
+            }
+          },
+          {
+            "weight": 1,
+            "set_block_property": {
+              "lunar:type": 3
             }
           }
         ]
@@ -65,6 +71,10 @@
         "components": {
           "minecraft:material_instances": {
             "*": {
+              "texture": "regolith_0",
+              "render_method": "opaque"
+            },
+            "up": {
               "texture": "regolith_1",
               "render_method": "opaque"
             }
@@ -76,7 +86,26 @@
         "components": {
           "minecraft:material_instances": {
             "*": {
+              "texture": "regolith_0",
+              "render_method": "opaque"
+            },
+            "up": {
               "texture": "regolith_2",
+              "render_method": "opaque"
+            }
+          }
+        }
+      },
+      {
+        "condition": "query.block_property('lunar:type') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "regolith_0",
+              "render_method": "opaque"
+            },
+            "up": {
+              "texture": "regolith_3",
               "render_method": "opaque"
             }
           }
