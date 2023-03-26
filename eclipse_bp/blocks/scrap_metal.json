@@ -1,0 +1,146 @@
+{
+  "format_version": "1.19.60",
+  "minecraft:block": {
+    "description": {
+      "identifier": "lunar:scrap_metal",
+      "menu_category": {
+        "category": "nature",
+        "is_hidden_in_commands": false
+      },
+      "properties": {
+        "lunar:type": [ 0, 1, 2, 3 ],
+        "lunar:rotation": [ 2, 3, 4, 5 ]
+      }
+    },
+    "components": {
+      "minecraft:geometry": "geometry.scrap_metal_1",
+      "minecraft:on_placed": {
+        "event": "lunar:set_type",
+        "target": "self"
+      },
+      "minecraft:on_player_placing": {
+        "event": "lunar:set_rotation",
+        "target": "self"
+      },
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "scrap_metal_1",
+          "render_method": "opaque"
+        }
+      }
+    },
+    "events": {
+      "lunar:set_type": {
+        "set_block_property": {
+          "lunar:type": "math.random(0, 3)"
+        }
+      },
+      "lunar:set_rotation": {
+        "set_block_property": {
+          "lunar:rotation": "query.cardinal_facing_2d"
+        }
+      }
+    },
+    "permutations": [
+      {
+        "condition": "query.block_property('lunar:type') == 0",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "scrap_metal_1",
+              "render_method": "opaque"
+            }
+          },
+          "minecraft:geometry": "geometry.scrap_metal_1",
+          "minecraft:collision_box": {
+            "origin": [ -8, 0, -8 ],
+            "size": [ 16, 6, 16 ]
+          },
+          "minecraft:selection_box": {
+            "origin": [ -8, 0, -8 ],
+            "size": [ 16, 6, 16 ]
+          }
+        }
+      },
+      {
+        "condition": "query.block_property('lunar:type') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "scrap_metal_2",
+              "render_method": "opaque"
+            }
+          },
+          "minecraft:geometry": "geometry.scrap_metal_2",
+          "minecraft:collision_box": {
+            "origin": [ -8, 0, -8 ],
+            "size": [ 16, 1, 16 ]
+          },
+          "minecraft:selection_box": {
+            "origin": [ -8, 0, -8 ],
+            "size": [ 16, 1, 16 ]
+          }
+        }
+      },
+      {
+        "condition": "query.block_property('lunar:type') == 2",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "scrap_metal_3",
+              "render_method": "alpha_test"
+            }
+          },
+          "minecraft:geometry": "geometry.scrap_metal_3",
+          "minecraft:collision_box": {
+            "origin": [ -8, 0, -8 ],
+            "size": [ 16, 4, 16 ]
+          },
+          "minecraft:selection_box": {
+            "origin": [ -8, 0, -8 ],
+            "size": [ 16, 4, 16 ]
+          }
+        }
+      },
+      {
+        "condition": "query.block_property('lunar:type') == 3",
+        "components": {
+          "minecraft:material_instances": {
+            "*": {
+              "texture": "scrap_metal_4",
+              "render_method": "alpha_test"
+            }
+          },
+          "minecraft:geometry": "geometry.scrap_metal_4",
+          "minecraft:collision_box": {
+            "origin": [ -3.5, 0, -8 ],
+            "size": [ 11, 3, 16 ]
+          },
+          "minecraft:selection_box": {
+            "origin": [ -3.5, 0, -8 ],
+            "size": [ 11, 3, 16 ]
+          }
+        }
+      },
+
+      {
+        "condition": "query.block_property('lunar:rotation') == 3",
+        "components": {
+          "minecraft:rotation": [ 0, 180, 0 ]
+        }
+      },
+      {
+        "condition": "query.block_property('lunar:rotation') == 4",
+        "components": {
+          "minecraft:rotation": [ 0, 90, 0 ]
+        }
+      },
+      {
+        "condition": "query.block_property('lunar:rotation') == 5",
+        "components": {
+          "minecraft:rotation": [ 0, 270, 0 ]
+        }
+      }
+    ]
+  }
+}

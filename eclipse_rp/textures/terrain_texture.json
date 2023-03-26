@@ -96,6 +96,22 @@
     },
     "lunar_uranium_ore": {
       "textures": "textures/blocks/lunar_uranium_ore"
+    },
+    "lunar_silicon_ore": {
+      "textures": "textures/blocks/lunar_silicon_ore"
+    },
+
+    "scrap_metal_1": {
+      "textures": "textures/blocks/scrap_metal/scrap_metal_1"
+    },
+    "scrap_metal_2": {
+      "textures": "textures/blocks/scrap_metal/scrap_metal_2"
+    },
+    "scrap_metal_3": {
+      "textures": "textures/blocks/scrap_metal/scrap_metal_3"
+    },
+    "scrap_metal_4": {
+      "textures": "textures/blocks/scrap_metal/scrap_metal_4"
     }
   }
 }
