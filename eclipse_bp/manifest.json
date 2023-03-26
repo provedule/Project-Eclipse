@@ -11,7 +11,26 @@
 		{
 			"type": "data",
 			"uuid": "4054511e-2cc3-4294-8c8f-1a7bfe8ab2d6",
+			"description": "",
 			"version": [ 1, 0, 0 ]
+		},
+		{
+			"type": "script",
+			"uuid": "b2020482-7f70-4954-9245-238d5645b6ae",
+			"description": "",
+			"entry": "scripts/index.js",
+			"language": "javascript",
+			"version": [ 1, 0, 0 ]
+		}
+	],
+	"dependencies": [
+		{
+			"module_name": "@minecraft/server",
+			"version": "1.2.0-beta"
+		},
+		{
+			"module_name": "@minecraft/server-ui",
+			"version": "1.0.0-beta"
 		}
 	]
 }
