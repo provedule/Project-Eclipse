@@ -1,0 +1,31 @@
+{
+	"format_version": "1.13.0",
+
+	"minecraft:feature_rules": {
+		"description": {
+			"identifier": "concrete_foundation:cave_air_rule",
+			"places_feature": "concrete_foundation:cave_air"
+		},
+
+		"conditions": {
+			"placement_pass": "final_pass"
+		},
+
+		"distribution": {
+			"iterations": 98304,
+
+			"x": {
+				"distribution": "fixed_grid",
+				"extent": [0, 15]
+			},
+			"z": {
+				"distribution": "fixed_grid",
+				"extent": [0, 15]
+			},
+			"y": {
+				"distribution": "fixed_grid",
+				"extent": [-64, 320]
+			}
+		}
+	}
+}
