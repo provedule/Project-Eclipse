@@ -1,0 +1,15 @@
+{
+	"format_version": "1.13.0",
+
+	"minecraft:aggregate_feature": {
+		"description": {
+			"identifier": "a:rollingplains_column"
+		},
+
+		"features": [
+			"a:rollingplains_column_stonespan",
+			"a:rollingplains_column_dirt_placement",
+			"a:rollingplains_column_grass_placement"
+		]
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"format_version": "1.13.0",
+
+	"minecraft:scatter_feature": {
+		"description": {
+			"identifier": "a:rollingplains_column_dirt_placement"
+		},
+
+		"places_feature": "a:rollingplains_column_dirt_placement_x",
+
+		"iterations": 1,
+
+		"x": 0,
+		"z": 0,
+		"y": "t.stone_height"
+	}
+}

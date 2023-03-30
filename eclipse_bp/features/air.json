@@ -1,0 +1,26 @@
+{
+	"format_version": "1.13.0",
+
+	"minecraft:aggregate_feature": {
+		"description": {
+			"identifier": "concrete_foundation:air"
+		},
+
+		"features": [
+			"concrete_foundation:mosscobble_air",
+			"concrete_foundation:spawner_air",
+			"concrete_foundation:chest_air",
+			"concrete_foundation:cobble_air",
+			"concrete_foundation:iron_air",
+			"concrete_foundation:deepslate_air",
+			"concrete_foundation:stone_air",
+			"concrete_foundation:grass_air",
+			"concrete_foundation:copper_air",
+			"concrete_foundation:sand_air",
+			"concrete_foundation:gravel_air",
+			"concrete_foundation:water_air",
+			"concrete_foundation:dirt_air",
+			"concrete_foundation:lava_air"
+		]
+	}
+}

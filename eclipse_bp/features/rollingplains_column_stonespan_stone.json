@@ -1,0 +1,20 @@
+{
+	"format_version": "1.13.0",
+
+	"minecraft:single_block_feature": {
+		"description": {
+			"identifier": "a:rollingplains_column_stonespan_stone"
+		},
+
+		"places_block": {
+			"name": "lunar:lunar_stone"
+		},
+		"may_replace": [
+			{
+				"name": "minecraft:air"
+			}
+		],
+		"enforce_placement_rules": false,
+		"enforce_survivability_rules": false
+	}
+}

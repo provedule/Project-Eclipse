@@ -1,0 +1,27 @@
+{
+  "format_version": "1.13.0",
+  "minecraft:ore_feature": {
+    "description": {
+      "identifier": "lunar:dark_spot_feature"
+    },
+    "count": 128,
+    "replace_rules": [
+      {
+        "places_block":{
+			"name": "lunar:basaltic_regolith",
+			"states": {
+				"color": "silver"
+			}
+		},
+        "may_replace": [
+          {
+            "name": "minecraft:concrete"
+          },
+          {
+            "name": "minecraft:concrete_powder"
+          }
+        ]
+      }
+    ]
+  }
+}
