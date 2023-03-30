@@ -1,198 +1,8 @@
 import { world, system, MolangVariableMap, MinecraftBlockTypes, Player } from "@minecraft/server";
 import { ActionFormData } from "./Forms/Forms.js";
 import { Button } from "./Forms/Components.js";
-system.runInterval(
-    () => {
-        for (const player of world.getAllPlayers()) {
-            const block = player.getBlockFromViewDirection({ maxDistance: 10 });
-            if (block?.typeId == "test:structure_builder_n") {
-                const blocks = getBlocks(
-                    {
-                        x: block.location.x - 2,
-                        y: block.location.y - 1,
-                        z: block.location.z + 4,
-                    },
-                    {
-                        x: block.location.x + 2,
-                        y: block.location.y + 4,
-                        z: block.location.z + 1,
-                    },
-                    block.dimension,
-                );
-                
-                if (blocks.length > 0) {
-                    for (const block of blocks) {
-                        spawnEdgeParticles(
-                            {
-                                x: block.location.x,
-                                y: block.location.y,
-                                z: block.location.z,
-                            },
-                            {
-                                x: block.location.x + 1,
-                                y: block.location.y + 1,
-                                z: block.location.z + 1,
-                            },
-                            block.dimension,
-                            "test:red",
-                        );
-                    };
-                } else spawnEdgeParticles(
-                    {
-                        x: block.location.x - 2,
-                        y: block.location.y - 1,
-                        z: block.location.z + 5,
-                    },
-                    {
-                        x: block.location.x + 3,
-                        y: block.location.y + 5,
-                        z: block.location.z + 1,
-                    },
-                    block.dimension,
-                    "test:white",
-                );
-            } else if (block?.typeId == "test:structure_builder_s") {
-                const blocks = getBlocks(
-                    {
-                        x: block.location.x - 2,
-                        y: block.location.y - 1,
-                        z: block.location.z - 4,
-                    },
-                    {
-                        x: block.location.x + 2,
-                        y: block.location.y + 4,
-                        z: block.location.z - 1,
-                    },
-                    block.dimension,
-                );
-                
-                if (blocks.length > 0) {
-                    for (const block of blocks) {
-                        spawnEdgeParticles(
-                            {
-                                x: block.location.x,
-                                y: block.location.y,
-                                z: block.location.z,
-                            },
-                            {
-                                x: block.location.x + 1,
-                                y: block.location.y + 1,
-                                z: block.location.z + 1,
-                            },
-                            block.dimension,
-                            "test:red",
-                        );
-                    };
-                } else spawnEdgeParticles(
-                    {
-                        x: block.location.x - 2,
-                        y: block.location.y - 1,
-                        z: block.location.z - 4,
-                    },
-                    {
-                        x: block.location.x + 3,
-                        y: block.location.y + 5,
-                        z: block.location.z,
-                    },
-                    block.dimension,
-                    "test:white",
-                );
-            } else if (block?.typeId == "test:structure_builder_r") {
-                const blocks = getBlocks(
-                    {
-                        x: block.location.x - 4,
-                        y: block.location.y - 1,
-                        z: block.location.z + 2,
-                    },
-                    {
-                        x: block.location.x - 1,
-                        y: block.location.y + 4,
-                        z: block.location.z - 2,
-                    },
-                    block.dimension,
-                );
-                
-                if (blocks.length > 0) {
-                    for (const block of blocks) {
-                        spawnEdgeParticles(
-                            {
-                                x: block.location.x,
-                                y: block.location.y,
-                                z: block.location.z,
-                            },
-                            {
-                                x: block.location.x + 1,
-                                y: block.location.y + 1,
-                                z: block.location.z + 1,
-                            },
-                            block.dimension,
-                            "test:red",
-                        );
-                    };
-                } else spawnEdgeParticles(
-                    {
-                        x: block.location.x - 4,
-                        y: block.location.y - 1,
-                        z: block.location.z + 3,
-                    },
-                    {
-                        x: block.location.x,
-                        y: block.location.y + 5,
-                        z: block.location.z - 2,
-                    },
-                    block.dimension,
-                    "test:white",
-                );
-            } else if (block?.typeId == "test:structure_builder_l") {
-                const blocks = getBlocks(
-                    {
-                        x: block.location.x + 4,
-                        y: block.location.y - 1,
-                        z: block.location.z + 2,
-                    },
-                    {
-                        x: block.location.x + 1,
-                        y: block.location.y + 4,
-                        z: block.location.z - 2,
-                    },
-                    block.dimension,
-                );
-                
-                if (blocks.length > 0) {
-                    for (const block of blocks) {
-                        spawnEdgeParticles(
-                            {
-                                x: block.location.x,
-                                y: block.location.y,
-                                z: block.location.z,
-                            },
-                            {
-                                x: block.location.x + 1,
-                                y: block.location.y + 1,
-                                z: block.location.z + 1,
-                            },
-                            block.dimension,
-                            "test:red",
-                        );
-                    };
-                } else spawnEdgeParticles(
-                    {
-                        x: block.location.x + 5,
-                        y: block.location.y - 1,
-                        z: block.location.z + 3,
-                    },
-                    {
-                        x: block.location.x + 1,
-                        y: block.location.y + 5,
-                        z: block.location.z - 2,
-                    },
-                    block.dimension,
-                    "test:white",
-                );
-            };
-        };
-    },
-	5,
+system.events.beforeWatchdogTerminate.subscribe(
+	(data) => data.cancel = true,
 );
 
 const allowedBlocks = [
@@ -209,82 +19,18 @@ world.events.beforeItemUseOn.subscribe(
 		if(allowedBlocks.includes(block?.typeId)) data.cancel = true;
 		
         switch(block?.typeId) {
-            case "test:structure_builder_n": {
-				 const blocks = getBlocks(
-                    {
-                        x: block.location.x - 2,
-                        y: block.location.y - 1,
-                        z: block.location.z + 4,
-                    },
-                    {
-                        x: block.location.x + 2,
-                        y: block.location.y + 4,
-                        z: block.location.z + 1,
-                    },
-                    block.dimension,
-                );
-                
-                if (blocks.length > 0) return player.sendMessage("Blocks in the direction!");
+            case "test:structure_builder_n":
                 build(player, block, false, false, true, false);
-				break;
-			};
-			case "test:structure_builder_s": {
-				const blocks = getBlocks(
-                    {
-                        x: block.location.x - 2,
-                        y: block.location.y - 1,
-                        z: block.location.z - 4,
-                    },
-                    {
-                        x: block.location.x + 2,
-                        y: block.location.y + 4,
-                        z: block.location.z - 1,
-                    },
-                    block.dimension,
-                );
-                
-                if (blocks.length > 0) return player.sendMessage("Blocks in the direction!");
+			break;
+			case "test:structure_builder_s":
                 build(player, block, false, false, false, true);
-				break;
-			};
-            case "test:structure_builder_r": {
-				const blocks = getBlocks(
-                    {
-                        x: block.location.x - 4,
-                        y: block.location.y - 1,
-                        z: block.location.z + 2,
-                    },
-                    {
-                        x: block.location.x - 1,
-                        y: block.location.y + 4,
-                        z: block.location.z - 2,
-                    },
-                    block.dimension,
-                );
-                
-                if (blocks.length > 0) return player.sendMessage("Blocks in the direction!");
+			break;
+            case "test:structure_builder_r":
                 build(player, block, false, true, false, false);
-				break;
-			};
-            case "test:structure_builder_l": {
-				const blocks = getBlocks(
-                    {
-                        x: block.location.x + 4,
-                        y: block.location.y - 1,
-                        z: block.location.z + 2,
-                    },
-                    {
-                        x: block.location.x + 1,
-                        y: block.location.y + 4,
-                        z: block.location.z - 2,
-                    },
-                    block.dimension,
-                );
-                
-                if (blocks.length > 0) return player.sendMessage("Blocks in the direction!");
+			break;
+            case "test:structure_builder_l":
                 build(player, block, true, false, false, false);
-				break;
-			};
+			break;
         };
     },
 );
@@ -294,113 +40,1561 @@ const build = ( player, block, l, r, n, s ) => {
 	
 	player.addTag("inUI");
     new ActionFormData({ title: "Choose a Structure" })
-    .addButtons([
-        new Button({
-            id: "platform",
-            text: "Platform\n x8 +  x16",
-        }),
-		new Button({
-            id: "stairs",
-            text: "Stairs\n x16 +  x32",
-        }),
-    ])
+    .addButtons(
+		[
+			new Button(
+				{
+					id: "4way",
+					text: "4 Way\n x8 +  x16",
+				}
+			),
+			new Button(
+				{
+					id: "chamber",
+					text: "Chamber\n x8 +  x16",
+				}
+			),
+			new Button(
+				{
+					id: "anterchamber",
+					text: "Anterchamber\n x8 +  x16",
+				}
+			),
+			new Button(
+				{
+					id: "battery",
+					text: "Battery\n x8 +  x16",
+				}
+			),
+			new Button(
+				{
+					id: "craftingroom",
+					text: "Crafting Room\n x8 +  x16",
+				}
+			),
+			new Button(
+				{
+					id: "hallway",
+					text: "Hallway\n x8 +  x16",
+				}
+			),
+			new Button(
+				{
+					id: "turn_l",
+					text: "Turn Left\n x8 +  x16",
+				}
+			),
+			new Button(
+				{
+					id: "turn_r",
+					text: "Turn Right\n x8 +  x16",
+				}
+			),
+		],
+	)
     .open(player)
     .then(
         (response) => {
 			player.removeTag("inUI");
             if(response.canceled) return;
             switch(response.selection.customId) {
-                case "platform":
-					if (
+				case "4way":
+					/*if (
 						player.getItemCount( "minecraft:log" ) < 8
 						|| player.getItemCount( "minecraft:stick" ) < 16
 					) return player.sendMessage( "§cNot enough items!§r" );
-					
-					block.setType(MinecraftBlockTypes.air);
 					
 					player.runCommandAsync( "clear @s log 0 8" );
-					player.runCommandAsync( "clear @s stick 0 16" );
+					player.runCommandAsync( "clear @s stick 0 16" );*/
 					
                     if (l) {
-                        player.runCommandAsync(
-                            "structure load platform_l "
-                            + block.location.x + " "
+						const blocks = getBlocks(
+							{
+								x: block.location.x + 17,
+								y: block.location.y - 1,
+								z: block.location.z - 12,
+							},
+							{
+								x: block.location.x + 1,
+								y: block.location.y + 11,
+								z: block.location.z + 12,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_4way "
+							+ (block.location.x + 1) + " "
                             + (block.location.y - 1) + " "
-                            + (block.location.z - 2)
-							+ " 0_degrees none block_by_block 5"
+                            + (block.location.z - 8)
+							+ " 0_degrees none"
                         );
                     } else if (r) {
-                        player.runCommandAsync(
-                            "structure load platform_r "
-                            + (block.location.x - 4) + " "
+                        const blocks = getBlocks(
+							{
+								x: block.location.x - 17,
+								y: block.location.y - 1,
+								z: block.location.z - 12,
+							},
+							{
+								x: block.location.x - 1,
+								y: block.location.y + 11,
+								z: block.location.z + 12,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_4way "
+                            + (block.location.x - 17) + " "
                             + (block.location.y - 1) + " "
-                            + (block.location.z - 2)
-							+ " 0_degrees none block_by_block 5"
+                            + (block.location.z - 8)
+							+ " 0_degrees none"
                         );
                     } else if (n) {
-                        player.runCommandAsync(
-                            "structure load platform_n "
-                            + (block.location.x - 2) + " "
+						const blocks = getBlocks(
+							{
+								x: block.location.x - 12,
+								y: block.location.y - 1,
+								z: block.location.z + 17,
+							},
+							{
+								x: block.location.x + 12,
+								y: block.location.y + 11,
+								z: block.location.z + 1,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_4way "
+                            + (block.location.x - 8) + " "
                             + (block.location.y - 1) + " "
-                            + block.location.z
-							+ " 0_degrees none block_by_block 5"
+                            + (block.location.z + 1)
+							+ " 0_degrees none"
                         );
                     } else if (s) {
-                        player.runCommandAsync(
-                            "structure load platform_s "
-                            + (block.location.x - 2) + " "
+						const blocks = getBlocks(
+							{
+								x: block.location.x - 12,
+								y: block.location.y - 1,
+								z: block.location.z - 17,
+							},
+							{
+								x: block.location.x + 12,
+								y: block.location.y + 11,
+								z: block.location.z - 1,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_4way "
+                            + (block.location.x - 8) + " "
                             + (block.location.y - 1) + " "
-                            + (block.location.z - 4)
-							+ " 0_degrees none block_by_block 5"
+                            + (block.location.z - 17)
+							+ " 0_degrees none"
                         );
                     };
                 break;
-				case "stairs":
-					if (
+				case "chamber":
+					/*if (
 						player.getItemCount( "minecraft:log" ) < 8
 						|| player.getItemCount( "minecraft:stick" ) < 16
 					) return player.sendMessage( "§cNot enough items!§r" );
 					
-					block.setType(MinecraftBlockTypes.air);
-					
-					player.runCommandAsync( "clear @s log 0 16" );
-					player.runCommandAsync( "clear @s stick 0 32" );
+					player.runCommandAsync( "clear @s log 0 8" );
+					player.runCommandAsync( "clear @s stick 0 16" );*/
 					
                     if (l) {
-                        player.runCommandAsync(
-                            "structure load stairs_l "
-                            + block.location.x + " "
+						const blocks = getBlocks(
+							{
+								x: block.location.x + 17,
+								y: block.location.y - 1,
+								z: block.location.z - 12,
+							},
+							{
+								x: block.location.x + 1,
+								y: block.location.y + 11,
+								z: block.location.z + 12,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_chamber "
+							+ (block.location.x + 1) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 4)
+							+ " 0_degrees none"
+                        );
+                    } else if (r) {
+                        const blocks = getBlocks(
+							{
+								x: block.location.x - 17,
+								y: block.location.y - 1,
+								z: block.location.z - 12,
+							},
+							{
+								x: block.location.x - 1,
+								y: block.location.y + 11,
+								z: block.location.z + 12,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_chamber "
+                            + (block.location.x - 9) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 4)
+							+ " 0_degrees none"
+                        );
+                    } else if (n) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x - 12,
+								y: block.location.y - 1,
+								z: block.location.z + 17,
+							},
+							{
+								x: block.location.x + 12,
+								y: block.location.y + 11,
+								z: block.location.z + 1,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_chamber "
+                            + (block.location.x - 4) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z + 1)
+							+ " 90_degrees none"
+                        );
+                    } else if (s) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x - 12,
+								y: block.location.y - 1,
+								z: block.location.z - 17,
+							},
+							{
+								x: block.location.x + 12,
+								y: block.location.y + 11,
+								z: block.location.z - 1,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_chamber "
+                            + (block.location.x - 4) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 9)
+							+ " 90_degrees none"
+                        );
+                    };
+                break;
+				case "anterchamber":
+					/*if (
+						player.getItemCount( "minecraft:log" ) < 8
+						|| player.getItemCount( "minecraft:stick" ) < 16
+					) return player.sendMessage( "§cNot enough items!§r" );
+					
+					player.runCommandAsync( "clear @s log 0 8" );
+					player.runCommandAsync( "clear @s stick 0 16" );*/
+					
+                    if (l) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x + 17,
+								y: block.location.y - 1,
+								z: block.location.z - 12,
+							},
+							{
+								x: block.location.x + 1,
+								y: block.location.y + 11,
+								z: block.location.z + 12,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_antechamber "
+							+ (block.location.x + 1) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 17)
+							+ " 0_degrees none"
+                        );
+                    } else if (r) {
+                        const blocks = getBlocks(
+							{
+								x: block.location.x - 17,
+								y: block.location.y - 1,
+								z: block.location.z - 12,
+							},
+							{
+								x: block.location.x - 1,
+								y: block.location.y + 11,
+								z: block.location.z + 12,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_antechamber "
+                            + (block.location.x - 35) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 17)
+							+ " 0_degrees none"
+                        );
+                    } else if (n) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x - 17,
+								y: block.location.y - 1,
+								z: block.location.z + 35,
+							},
+							{
+								x: block.location.x + 17,
+								y: block.location.y + 27,
+								z: block.location.z + 1,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_antechamber "
+                            + (block.location.x - 17) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z + 1)
+							+ " 0_degrees none"
+                        );
+                    } else if (s) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x - 12,
+								y: block.location.y - 1,
+								z: block.location.z - 17,
+							},
+							{
+								x: block.location.x + 12,
+								y: block.location.y + 11,
+								z: block.location.z - 1,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_antechamber "
+                            + (block.location.x - 17) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 35)
+							+ " 0_degrees none"
+                        );
+                    };
+                break;
+				case "battery":
+					/*if (
+						player.getItemCount( "minecraft:log" ) < 8
+						|| player.getItemCount( "minecraft:stick" ) < 16
+					) return player.sendMessage( "§cNot enough items!§r" );
+					
+					player.runCommandAsync( "clear @s log 0 8" );
+					player.runCommandAsync( "clear @s stick 0 16" );*/
+					
+                    if (l) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x + 6,
+								y: block.location.y - 1,
+								z: block.location.z - 2,
+							},
+							{
+								x: block.location.x + 1,
+								y: block.location.y + 5,
+								z: block.location.z + 2,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_battery "
+							+ (block.location.x + 1) + " "
                             + (block.location.y - 1) + " "
                             + (block.location.z - 2)
 							+ " 0_degrees none block_by_block 5"
                         );
                     } else if (r) {
-                        player.runCommandAsync(
-                            "structure load stairs_r "
-                            + (block.location.x - 4) + " "
+                        const blocks = getBlocks(
+							{
+								x: block.location.x - 6,
+								y: block.location.y - 1,
+								z: block.location.z - 2,
+							},
+							{
+								x: block.location.x - 1,
+								y: block.location.y + 5,
+								z: block.location.z + 2,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_battery "
+                            + (block.location.x - 6) + " "
                             + (block.location.y - 1) + " "
                             + (block.location.z - 2)
-							+ " 0_degrees none block_by_block 5"
+							+ " 180_degrees none block_by_block 5"
                         );
                     } else if (n) {
-                        player.runCommandAsync(
-                            "structure load stairs_n "
+						const blocks = getBlocks(
+							{
+								x: block.location.x - 2,
+								y: block.location.y - 1,
+								z: block.location.z + 6,
+							},
+							{
+								x: block.location.x + 2,
+								y: block.location.y + 5,
+								z: block.location.z + 1,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_battery "
                             + (block.location.x - 2) + " "
                             + (block.location.y - 1) + " "
-                            + block.location.z
-							+ " 0_degrees none block_by_block 5"
+                            + (block.location.z + 1)
+							+ " 90_degrees none block_by_block 5"
                         );
                     } else if (s) {
-                        player.runCommandAsync(
-                            "structure load stairs_s "
+						const blocks = getBlocks(
+							{
+								x: block.location.x - 2,
+								y: block.location.y - 1,
+								z: block.location.z - 6,
+							},
+							{
+								x: block.location.x + 2,
+								y: block.location.y + 5,
+								z: block.location.z - 1,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_battery "
                             + (block.location.x - 2) + " "
                             + (block.location.y - 1) + " "
-                            + (block.location.z - 4)
-							+ " 0_degrees none block_by_block 5"
+                            + (block.location.z - 6)
+							+ " 270_degrees none block_by_block 5"
                         );
                     };
                 break;
-            };
+				case "craftingroom":
+					/*if (
+						player.getItemCount( "minecraft:log" ) < 8
+						|| player.getItemCount( "minecraft:stick" ) < 16
+					) return player.sendMessage( "§cNot enough items!§r" );
+					
+					player.runCommandAsync( "clear @s log 0 8" );
+					player.runCommandAsync( "clear @s stick 0 16" );*/
+					
+                    if (l) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x + 15,
+								y: block.location.y - 1,
+								z: block.location.z - 12,
+							},
+							{
+								x: block.location.x + 1,
+								y: block.location.y + 11,
+								z: block.location.z + 12,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_craftingroom "
+							+ (block.location.x + 1) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 14)
+							+ " 0_degrees none"
+                        );
+                    } else if (r) {
+                        const blocks = getBlocks(
+							{
+								x: block.location.x - 15,
+								y: block.location.y - 1,
+								z: block.location.z - 12,
+							},
+							{
+								x: block.location.x - 1,
+								y: block.location.y + 11,
+								z: block.location.z + 12,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_craftingroom "
+                            + (block.location.x - 15) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 14)
+							+ " 180_degrees none"
+                        );
+                    } else if (n) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x - 12,
+								y: block.location.y - 1,
+								z: block.location.z + 15,
+							},
+							{
+								x: block.location.x + 12,
+								y: block.location.y + 11,
+								z: block.location.z + 1,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_craftingroom "
+                            + (block.location.x - 14) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z + 1)
+							+ " 90_degrees none"
+                        );
+                    } else if (s) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x - 12,
+								y: block.location.y - 1,
+								z: block.location.z - 15,
+							},
+							{
+								x: block.location.x + 12,
+								y: block.location.y + 11,
+								z: block.location.z - 1,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_craftingroom "
+                            + (block.location.x - 14) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 15)
+							+ " 270_degrees none"
+                        );
+                    };
+                break;
+				case "hallway":
+					/*if (
+						player.getItemCount( "minecraft:log" ) < 8
+						|| player.getItemCount( "minecraft:stick" ) < 16
+					) return player.sendMessage( "§cNot enough items!§r" );
+					
+					player.runCommandAsync( "clear @s log 0 8" );
+					player.runCommandAsync( "clear @s stick 0 16" );*/
+					
+                    if (l) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x + 11,
+								y: block.location.y - 1,
+								z: block.location.z - 2,
+							},
+							{
+								x: block.location.x + 1,
+								y: block.location.y + 5,
+								z: block.location.z + 2,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_hallway "
+							+ (block.location.x + 1) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 3)
+							+ " 0_degrees none"
+                        );
+                    } else if (r) {
+                        const blocks = getBlocks(
+							{
+								x: block.location.x - 11,
+								y: block.location.y - 1,
+								z: block.location.z - 2,
+							},
+							{
+								x: block.location.x - 1,
+								y: block.location.y + 5,
+								z: block.location.z + 2,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_hallway "
+                            + (block.location.x - 11) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 3)
+							+ " 90_degrees none"
+                        );
+                    } else if (n) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x - 2,
+								y: block.location.y - 1,
+								z: block.location.z + 11,
+							},
+							{
+								x: block.location.x + 2,
+								y: block.location.y + 5,
+								z: block.location.z + 1,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_hallway "
+                            + (block.location.x - 3) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z + 1)
+							+ " 180_degrees none"
+                        );
+                    } else if (s) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x - 2,
+								y: block.location.y - 1,
+								z: block.location.z - 11,
+							},
+							{
+								x: block.location.x + 2,
+								y: block.location.y + 5,
+								z: block.location.z - 1,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_hallway "
+                            + (block.location.x - 3) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 11)
+							+ " 0_degrees none"
+                        );
+                    };
+                break;
+				case "turn_l":
+					/*if (
+						player.getItemCount( "minecraft:log" ) < 8
+						|| player.getItemCount( "minecraft:stick" ) < 16
+					) return player.sendMessage( "§cNot enough items!§r" );
+					
+					player.runCommandAsync( "clear @s log 0 8" );
+					player.runCommandAsync( "clear @s stick 0 16" );*/
+					
+                    if (l) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x + 17,
+								y: block.location.y - 1,
+								z: block.location.z - 12,
+							},
+							{
+								x: block.location.x + 1,
+								y: block.location.y + 11,
+								z: block.location.z + 12,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_turn "
+							+ (block.location.x + 1) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 8)
+							+ " 180_degrees none"
+                        );
+                    } else if (r) {
+                        const blocks = getBlocks(
+							{
+								x: block.location.x - 17,
+								y: block.location.y - 1,
+								z: block.location.z - 12,
+							},
+							{
+								x: block.location.x - 1,
+								y: block.location.y + 11,
+								z: block.location.z + 12,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_turn "
+                            + (block.location.x - 12) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 3)
+							+ " 0_degrees none"
+                        );
+                    } else if (n) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x - 12,
+								y: block.location.y - 1,
+								z: block.location.z + 17,
+							},
+							{
+								x: block.location.x + 12,
+								y: block.location.y + 11,
+								z: block.location.z + 1,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_turn "
+                            + (block.location.x - 3) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z + 1)
+							+ " 270_degrees none"
+                        );
+                    } else if (s) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x - 12,
+								y: block.location.y - 1,
+								z: block.location.z - 17,
+							},
+							{
+								x: block.location.x + 12,
+								y: block.location.y + 11,
+								z: block.location.z - 1,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_turn "
+                            + (block.location.x - 8) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 12)
+							+ " 90_degrees none"
+                        );
+                    };
+                break;
+				case "turn_r":
+					/*if (
+						player.getItemCount( "minecraft:log" ) < 8
+						|| player.getItemCount( "minecraft:stick" ) < 16
+					) return player.sendMessage( "§cNot enough items!§r" );
+					
+					player.runCommandAsync( "clear @s log 0 8" );
+					player.runCommandAsync( "clear @s stick 0 16" );*/
+					
+                    if (l) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x + 17,
+								y: block.location.y - 1,
+								z: block.location.z - 12,
+							},
+							{
+								x: block.location.x + 1,
+								y: block.location.y + 11,
+								z: block.location.z + 12,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_turn "
+							+ (block.location.x + 1) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 3)
+							+ " 90_degrees none"
+                        );
+                    } else if (r) {
+                        const blocks = getBlocks(
+							{
+								x: block.location.x - 17,
+								y: block.location.y - 1,
+								z: block.location.z - 12,
+							},
+							{
+								x: block.location.x - 1,
+								y: block.location.y + 11,
+								z: block.location.z + 12,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_turn "
+                            + (block.location.x - 12) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 8)
+							+ " 270_degrees none"
+                        );
+                    } else if (n) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x - 12,
+								y: block.location.y - 1,
+								z: block.location.z + 17,
+							},
+							{
+								x: block.location.x + 12,
+								y: block.location.y + 11,
+								z: block.location.z + 1,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_turn "
+                            + (block.location.x - 8) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z + 1)
+							+ " 180_degrees none"
+                        );
+                    } else if (s) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x - 12,
+								y: block.location.y - 1,
+								z: block.location.z - 17,
+							},
+							{
+								x: block.location.x + 12,
+								y: block.location.y + 11,
+								z: block.location.z - 1,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_turn "
+                            + (block.location.x - 3) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 12)
+							+ " 0_degrees none"
+                        );
+                    };
+                break;
+			};
         },
     );
 };
