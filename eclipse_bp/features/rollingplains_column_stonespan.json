@@ -1,0 +1,20 @@
+{
+	"format_version": "1.13.0",
+
+	"minecraft:scatter_feature": {
+		"description": {
+			"identifier": "a:rollingplains_column_stonespan"
+		},
+
+		"places_feature": "a:rollingplains_column_stonespan_stone",
+
+		"iterations": "t.stone_height",
+
+		"x": 0,
+		"z": 0,
+		"y": {
+			"distribution": "fixed_grid",
+			"extent": [0, "t.stone_height - 1"]
+		}
+	}
+}

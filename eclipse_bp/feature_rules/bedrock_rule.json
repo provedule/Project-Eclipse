@@ -1,0 +1,28 @@
+{
+	"format_version": "1.13.0",
+
+	"minecraft:feature_rules": {
+		"description": {
+			"identifier": "concrete_foundation:bedrock_rule",
+			"places_feature": "concrete_foundation:bedrock"
+		},
+
+		"conditions": {
+			"placement_pass": "first_pass"
+		},
+
+		"distribution": {
+			"iterations": 256,
+
+			"x": {
+				"distribution": "fixed_grid",
+				"extent": [0, 15]
+			},
+			"z": {
+				"distribution": "fixed_grid",
+				"extent": [0, 15]
+			},
+			"y": -64
+		}
+	}
+}

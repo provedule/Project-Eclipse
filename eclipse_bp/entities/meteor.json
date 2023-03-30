@@ -27,11 +27,25 @@
           "width": 10
         }
       },
+      "meteor:on_death": {
+        "minecraft:spawn_entity": {
+          "entities": [
+            {
+              "spawn_entity": "eclipse:asteroid",
+              "spawn_event": "minecraft:entity_spawned",
+              "num_to_spawn": 1,
+              "single_use": true,
+              "min_wait_time": 0,
+              "max_wait_time": 1
+            }
+          ]
+        }
+      },
       "minecraft:exploding": {
         "minecraft:explode": {
           "fuse_length": 0,
           "fuse_lit": true,
-          "power": 5,
+          "power": 10,
           "causes_fire": true,
           "fire_affected_by_griefing": true,
           "destroy_affected_by_griefing": true
@@ -40,10 +54,11 @@
     },
 
     "components": {
+      "minecraft:on_death": "meteor:trigger_death",
       "minecraft:projectile": {
         "on_hit": {
           "impact_damage": {
-            "damage": 6,
+            "damage": 12,
             "knockback": false,
             "semi_random_diff_damage": false
           },
@@ -124,6 +139,13 @@
       "minecraft:explode": {
         "add": {
           "component_groups": ["minecraft:exploding"]
+        }
+      },
+      "meteor:trigger_death": {
+        "add": {
+          "component_groups": [
+            "meteor:on_death"
+          ]
         }
       }
     }

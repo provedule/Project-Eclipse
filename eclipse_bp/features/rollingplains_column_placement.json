@@ -1,0 +1,17 @@
+{
+	"format_version": "1.13.0",
+
+	"minecraft:scatter_feature": {
+		"description": {
+			"identifier": "a:rollingplains_column_placement"
+		},
+
+		"places_feature": "a:rollingplains_column",
+
+		"iterations": "t.column_height = 256 + 8  * q.noise(v.originx/256, v.originz/256) + q.noise(v.originx/64, v.originz/64); t.stone_height = t.column_height - 4; t.grass_height = t.column_height - t.stone_height; return 1;",
+
+		"x": 0,
+		"z": 0,
+		"y": 0
+	}
+}

@@ -1,0 +1,20 @@
+{
+
+	"format_version": "1.16.100",
+	"minecraft:item": {
+		"description": {
+			"identifier": "lunar:laser",
+			"category": "items"
+		},
+		"components": {
+			"minecraft:max_stack_size": 64,
+            "minecraft:display_name": {
+                "value": "Laser"
+            },
+			"minecraft:hand_equipped": false,
+			"minecraft:icon": {
+				"texture": "laser"
+			}
+		}
+	}
+}

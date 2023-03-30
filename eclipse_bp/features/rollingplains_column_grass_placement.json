@@ -1,0 +1,17 @@
+{
+	"format_version": "1.13.0",
+
+	"minecraft:scatter_feature": {
+		"description": {
+			"identifier": "a:rollingplains_column_grass_placement"
+		},
+
+		"places_feature": "a:rollingplains_column_grass",
+
+		"iterations": "t.grass_height > 0",
+
+		"x": 0,
+		"z": 0,
+		"y": "t.stone_height + t.grass_height - 1"
+	}
+}

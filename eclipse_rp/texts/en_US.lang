@@ -1,0 +1,32 @@
+entity.eclipse:asteroid.name=Asteroid
+
+entity.eclipse:drone_monster.name=Drone Monster
+entity.eclipse:giant.name=Giant
+
+entity.eclipse:meteor.name=Meteor
+item.eclipse:meteor=Meteor
+
+tile.lunar:basaltic_regolith.name=Basaltic Regolith
+tile.lunar:brushed_steel.name=Brushed Steel
+tile.lunar:carbon_processor.name=Carbon Processor
+tile.lunar:frozen_meteoric_iron_ore.name=Frozen Meteoric Iron Ore
+tile.lunar:lunar_copper_ore.name=Lunar Copper Ore
+tile.lunar:lunar_gold_ore.name=Lunar Gold Ore
+tile.lunar:lunar_lead_ore.name=Lunar Lead Ore
+tile.lunar:lunar_platinum_ore.name=Lunar Platinum Ore
+tile.lunar:lunar_silicon_ore.name=Lunar Silicon Ore
+tile.lunar:lunar_stone.name=Lunar Stone
+tile.lunar:lunar_tin_ore.name=Lunar Tin Ore
+tile.lunar:lunar_titanium_ore.name=Lunar Titanium Ore
+tile.lunar:lunar_uranium_ore.name=Lunar Uranium Ore
+tile.lunar:meteoric_iron_ore.name=Meteoric Iron Ore
+tile.lunar:meteorite.name=Meteorite
+tile.lunar:regolith.name=Regolith
+tile.lunar:scrap_metal.name=Scrap Metal
+tile.lunar:solar_panel.name=Solar Panel
+tile.lunar:steel_block.name=Steel Block
+tile.lunar:steel_sheet.name=Steel Sheet
+tile.test:structure_builder_l.name=Structure Builder L
+tile.test:structure_builder_n.name=Structure Builder N
+tile.test:structure_builder_r.name=Structure Builder R
+tile.test:structure_builder_s.name=Structure Builder S
