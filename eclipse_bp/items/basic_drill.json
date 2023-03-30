@@ -1,0 +1,35 @@
+{
+    "format_version": "1.16.100",
+  "minecraft:item": {
+    "description": {
+      "identifier": "lunar:basic_drill",
+      "category": "equipment"
+    },
+    "components": {
+      "tag:lunar:basic_drill": {},
+      "minecraft:max_stack_size": 1,
+      "minecraft:hand_equipped": true,
+      "minecraft:icon": {
+        "texture": "basic_drill"
+      },
+      "minecraft:creative_category":{
+        "parent": "itemGroup.name.pickaxe"
+      },
+      "minecraft:display_name": {
+        "value": "Basic Drill"
+      },
+      "minecraft:damage": 7,
+      "minecraft:digger": {
+        "destroy_speeds": [
+            
+            {
+                "block": {
+                    "tags": "q.any_tag('basic_extractable')"
+                },
+                "speed": 10
+		}
+        ]
+    }
+   }
+  }
+}
