@@ -10,7 +10,7 @@
     },
     "components": {
       "minecraft:unit_cube": {},
-	"tag:lunar:basic_extractable{},
+	"tag:lunar:basic_extractable": {},
       "minecraft:material_instances": {
         "*": {
           "texture": "lunar_copper_ore",

@@ -13,8 +13,8 @@
     },
     "components": {
       "minecraft:unit_cube": {},
-	"tag:lunar:broken_extractable{},
-	"tag:lunar:basic_extractable{},
+	"tag:lunar:broken_extractable": {},
+	"tag:lunar:basic_extractable": {},
       "minecraft:on_placed": {
         "event": "lunar:set_type",
         "target": "self"
