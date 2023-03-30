@@ -1,0 +1,42 @@
+{
+  "resource_pack_name": "vanilla",
+  "texture_name": "atlas.items",
+  "texture_data": {
+    "cpu": {
+      "textures": "textures/items/cpu"
+    },
+    "basic_oxygen_tank": {
+      "textures": "textures/items/basic_oxygen_tank"
+    },
+    "gold_insulation": {
+      "textures": "textures/items/gold_insulation"
+    },
+    "laser": {
+      "textures": "textures/items/laser"
+    },
+    "mesh": {
+      "textures": "textures/items/mesh"
+    },
+    "metasteel": {
+      "textures": "textures/items/metasteel"
+    },
+    "onboard_computer": {
+      "textures": "textures/items/onboard_computer"
+    },
+    "raw_silicon": {
+      "textures": "textures/items/raw_silicon"
+    },
+    "rocket_fuel": {
+      "textures": "textures/items/rocket_fuel"
+    },
+    "scrap": {
+      "textures": "textures/items/scrap"
+    },
+    "silicon_crystal": {
+      "textures": "textures/items/silicon_crystal"
+    },
+    "turbo_fan": {
+      "textures": "textures/items/turbo_fan"
+    }
+  }
+}
