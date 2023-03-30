@@ -27,15 +27,7 @@
           "width": 10
         }
       },
-      "minecraft:exploding": {
-        "minecraft:explode": {
-          "fuse_length": 0,
-          "fuse_lit": true,
-          "power": 10,
-          "causes_fire": true,
-          "fire_affected_by_griefing": true,
-          "destroy_affected_by_griefing": true
-        },
+      "meteor:on_death": {
         "minecraft:spawn_entity": {
           "entities": [
             {
@@ -44,14 +36,25 @@
               "num_to_spawn": 1,
               "single_use": true,
               "min_wait_time": 0,
-              "max_wait_time": 0
+              "max_wait_time": 1
             }
           ]
+        }
+      },
+      "minecraft:exploding": {
+        "minecraft:explode": {
+          "fuse_length": 0,
+          "fuse_lit": true,
+          "power": 10,
+          "causes_fire": true,
+          "fire_affected_by_griefing": true,
+          "destroy_affected_by_griefing": true
         }
       }
     },
 
     "components": {
+      "minecraft:on_death": "meteor:trigger_death",
       "minecraft:projectile": {
         "on_hit": {
           "impact_damage": {
@@ -136,6 +139,13 @@
       "minecraft:explode": {
         "add": {
           "component_groups": ["minecraft:exploding"]
+        }
+      },
+      "meteor:trigger_death": {
+        "add": {
+          "component_groups": [
+            "meteor:on_death"
+          ]
         }
       }
     }
