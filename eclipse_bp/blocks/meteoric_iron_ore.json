@@ -10,11 +10,15 @@
     },
     "components": {
       "minecraft:unit_cube": {},
+      "tag:lunar:basic_extractable": {},
       "minecraft:material_instances": {
         "*": {
           "texture": "meteoric_iron_ore",
           "render_method": "opaque"
         }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 2
       }
     }
   }

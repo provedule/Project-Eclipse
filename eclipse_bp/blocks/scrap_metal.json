@@ -14,6 +14,8 @@
     },
     "components": {
       "minecraft:geometry": "geometry.scrap_metal_1",
+      "tag:lunar:broken_extractable": {},
+      "tag:lunar:basic_extractable": {},
       "minecraft:on_placed": {
         "event": "lunar:set_type",
         "target": "self"
@@ -27,6 +29,9 @@
           "texture": "scrap_metal_1",
           "render_method": "opaque"
         }
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0
       }
     },
     "events": {

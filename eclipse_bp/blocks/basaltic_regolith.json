@@ -13,9 +13,14 @@
     },
     "components": {
       "minecraft:unit_cube": {},
+      "tag:lunar:broken_extractable": {},
+      "tag:lunar:basic_extractable": {},
       "minecraft:on_placed": {
         "event": "lunar:set_type",
         "target": "self"
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.8
       },
       "minecraft:material_instances": {
         "*": {

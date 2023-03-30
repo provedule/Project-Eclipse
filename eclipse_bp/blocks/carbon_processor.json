@@ -15,9 +15,14 @@
     },
     "components": {
       "tag:solar_panel": {},
+      "tag:lunar:broken_extractable": {},
+      "tag:lunar:basic_extractable": {},
       "minecraft:geometry": "geometry.carbon_processor",
       "minecraft:on_player_placing": {
         "event": "lunar:place"
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 2
       },
       "minecraft:on_interact": {
         "event": "lunar:interact",

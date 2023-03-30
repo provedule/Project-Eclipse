@@ -15,9 +15,14 @@
     },
     "components": {
       "tag:solar_panel": {},
+      "tag:lunar:broken_extractable": {},
+      "tag:lunar:basic_extractable": {},
       "minecraft:geometry": "geometry.solar_panel",
       "minecraft:on_player_placing": {
         "event": "lunar:place"
+      },
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 3
       },
       "minecraft:selection_box": {
         "origin": [ -8, 0, -8 ],
