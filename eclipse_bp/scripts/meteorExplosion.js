@@ -1,4 +1,4 @@
-import { Dimension, EntityScaleComponent, MinecraftBlockTypes, MinecraftEffectTypes, TicksPerSecond, Vector, system, world } from "@minecraft/server";
+import { Dimension, EntityScaleComponent, MinecraftBlockTypes, MinecraftEffectTypes, MolangVariableMap, TicksPerSecond, Vector, system, world } from "@minecraft/server";
 
 /**
  * @param {import("@minecraft/server").Vector3} coord
@@ -23,37 +23,14 @@ world.events.beforeExplosion.subscribe((event) => {
   event.setImpactedBlocks(blocks);
 
   // asteroid
-  const asteroid = dimension.spawnEntity('eclipse:asteroid', location);
   for (const player of dimension.getPlayers({ closest: 75 })) {
     player.playSound('mob.warden.emerge');
+    player.runCommandAsync("camerashake @s 1.0 1.0")
   };
-  // slow falling incase it blows up in the air
-  asteroid.addEffect(MinecraftEffectTypes.slowFalling, 10, 1, false);
+  
+  const deathExplosionMolangVariables = new MolangVariableMap();
+  deathExplosionMolangVariables.setVector3("variable.aabb", new Vector(10, 10, 10));
 
-  const id = system.runInterval(() => {
-    /**
-     * @type {EntityScaleComponent}
-     */
-    const scale = asteroid.getComponent(EntityScaleComponent.componentId);
-    const closest = scale.value / 2.25;
-
-    (async () => {
-      for (const player of dimension.getPlayers({ closest: closest * 4 })) {
-        const distance = Vector.subtract(player.location, asteroid.location).length();
-        const amplifer = closest / distance * 10;
-        player.runCommandAsync(`camerashake add @s ${amplifer > 4 ? 4 : amplifer} 0.05`)
-      };
-    })().catch(console.log);
-
-    (async () => {
-      for (const player of dimension.getPlayers({ closest })) {
-        const effects = player.getEffects();
-        if (effects.findIndex(effect => effect.displayName === MinecraftEffectTypes.darkness.getName()) === -1) {
-          player.addEffect(MinecraftEffectTypes.darkness, TicksPerSecond, 0, false);
-        }
-      };
-    })().catch(console.log);
-  });
-
-  system.runTimeout(() => system.clearRun(id), 7 * TicksPerSecond);
+  dimension.spawnParticle("eclipse:dragon_death_explosion_emitter", location, deathExplosionMolangVariables);
+  dimension.spawnParticle("eclipse:campfire_smoke_particle", location, new MolangVariableMap());
 });
