@@ -37,6 +37,12 @@
     },
     "turbo_fan": {
       "textures": "textures/items/turbo_fan"
+    },
+    "broken_drill": {
+      "textures": "textures/items/broken_drill"
+    },
+    "basic_drill": {
+      "textures": "textures/items/drill"
     }
   }
 }
