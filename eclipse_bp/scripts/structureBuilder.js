@@ -56,8 +56,8 @@ const build = ( player, block, l, r, n, s ) => {
 			),
 			new Button(
 				{
-					id: "anterchamber",
-					text: "Anterchamber\n x5 +  x23 +  x55",
+					id: "antechamber",
+					text: "Antechamber\n x5 +  x23 +  x55",
 				}
 			),
 			new Button(
@@ -289,14 +289,6 @@ const build = ( player, block, l, r, n, s ) => {
                     };
                 break;
 				case "chamber":
-					/*if (
-						player.getItemCount( "minecraft:log" ) < 8
-						|| player.getItemCount( "minecraft:stick" ) < 16
-					) return player.sendMessage( "§cNot enough items!§r" );
-					
-					player.runCommandAsync( "clear @s log 0 8" );
-					player.runCommandAsync( "clear @s stick 0 16" );*/
-					
                     if (l) {
 						const blocks = getBlocks(
 							{
@@ -475,15 +467,7 @@ const build = ( player, block, l, r, n, s ) => {
                         );
                     };
                 break;
-				case "anterchamber":
-					/*if (
-						player.getItemCount( "minecraft:log" ) < 8
-						|| player.getItemCount( "minecraft:stick" ) < 16
-					) return player.sendMessage( "§cNot enough items!§r" );
-					
-					player.runCommandAsync( "clear @s log 0 8" );
-					player.runCommandAsync( "clear @s stick 0 16" );*/
-					
+				case "antechamber":
                     if (l) {
 						const blocks = getBlocks(
 							{
@@ -663,14 +647,6 @@ const build = ( player, block, l, r, n, s ) => {
                     };
                 break;
 				case "battery":
-					/*if (
-						player.getItemCount( "minecraft:log" ) < 8
-						|| player.getItemCount( "minecraft:stick" ) < 16
-					) return player.sendMessage( "§cNot enough items!§r" );
-					
-					player.runCommandAsync( "clear @s log 0 8" );
-					player.runCommandAsync( "clear @s stick 0 16" );*/
-					
                     if (l) {
 						const blocks = getBlocks(
 							{
@@ -850,14 +826,6 @@ const build = ( player, block, l, r, n, s ) => {
                     };
                 break;
 				case "craftingroom":
-					/*if (
-						player.getItemCount( "minecraft:log" ) < 8
-						|| player.getItemCount( "minecraft:stick" ) < 16
-					) return player.sendMessage( "§cNot enough items!§r" );
-					
-					player.runCommandAsync( "clear @s log 0 8" );
-					player.runCommandAsync( "clear @s stick 0 16" );*/
-					
                     if (l) {
 						const blocks = getBlocks(
 							{
@@ -1037,14 +1005,6 @@ const build = ( player, block, l, r, n, s ) => {
                     };
                 break;
 				case "hallway":
-					/*if (
-						player.getItemCount( "minecraft:log" ) < 8
-						|| player.getItemCount( "minecraft:stick" ) < 16
-					) return player.sendMessage( "§cNot enough items!§r" );
-					
-					player.runCommandAsync( "clear @s log 0 8" );
-					player.runCommandAsync( "clear @s stick 0 16" );*/
-					
                     if (l) {
 						const blocks = getBlocks(
 							{
@@ -1224,14 +1184,6 @@ const build = ( player, block, l, r, n, s ) => {
                     };
                 break;
 				case "turn_l":
-					/*if (
-						player.getItemCount( "minecraft:log" ) < 8
-						|| player.getItemCount( "minecraft:stick" ) < 16
-					) return player.sendMessage( "§cNot enough items!§r" );
-					
-					player.runCommandAsync( "clear @s log 0 8" );
-					player.runCommandAsync( "clear @s stick 0 16" );*/
-					
                     if (l) {
 						const blocks = getBlocks(
 							{
@@ -1411,14 +1363,6 @@ const build = ( player, block, l, r, n, s ) => {
                     };
                 break;
 				case "turn_r":
-					/*if (
-						player.getItemCount( "minecraft:log" ) < 8
-						|| player.getItemCount( "minecraft:stick" ) < 16
-					) return player.sendMessage( "§cNot enough items!§r" );
-					
-					player.runCommandAsync( "clear @s log 0 8" );
-					player.runCommandAsync( "clear @s stick 0 16" );*/
-					
                     if (l) {
 						const blocks = getBlocks(
 							{
