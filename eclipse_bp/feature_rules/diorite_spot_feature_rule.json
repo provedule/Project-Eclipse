@@ -17,7 +17,7 @@
        			"distribution": "gaussian",
        			"extent": [ 0, 96 ]
       		},
-      		"y": "q.above_top_solid(v.originx, v.originz) - 3",
+      		"y": "q.above_top_solid(v.originx, v.originz)",
       		"z": {
        			"distribution": "gaussian",
        			"extent": [ 0, 96 ]
