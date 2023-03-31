@@ -15,10 +15,10 @@
 		},
         "may_replace": [
           {
-            "name": "minecraft:concrete"
+            "name": "lunar:lunar_stone"
           },
           {
-            "name": "minecraft:concrete_powder"
+            "name": "lunar:regolith"
           }
         ]
       }
