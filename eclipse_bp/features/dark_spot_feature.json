@@ -9,16 +9,13 @@
       {
         "places_block":{
 			"name": "lunar:basaltic_regolith",
-			"states": {
-				"color": "silver"
-			}
 		},
         "may_replace": [
           {
-            "name": "minecraft:concrete"
+            "name": "lunar:lunar_stone"
           },
           {
-            "name": "minecraft:concrete_powder"
+            "name": "lunar:regolith"
           }
         ]
       }
