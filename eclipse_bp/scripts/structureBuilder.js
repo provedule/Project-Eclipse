@@ -45,49 +45,49 @@ const build = ( player, block, l, r, n, s ) => {
 			new Button(
 				{
 					id: "4way",
-					text: "4 Way\n x8 +  x16",
+					text: "4 Way\n x5 +  x23 +  x55",
 				}
 			),
 			new Button(
 				{
 					id: "chamber",
-					text: "Chamber\n x8 +  x16",
+					text: "Chamber\n x5 +  x23 +  x55",
 				}
 			),
 			new Button(
 				{
 					id: "anterchamber",
-					text: "Anterchamber\n x8 +  x16",
+					text: "Anterchamber\n x5 +  x23 +  x55",
 				}
 			),
 			new Button(
 				{
 					id: "battery",
-					text: "Battery\n x8 +  x16",
+					text: "Battery\n x5 +  x23 +  x55",
 				}
 			),
 			new Button(
 				{
 					id: "craftingroom",
-					text: "Crafting Room\n x8 +  x16",
+					text: "Crafting Room\n x5 +  x23 +  x55",
 				}
 			),
 			new Button(
 				{
 					id: "hallway",
-					text: "Hallway\n x8 +  x16",
+					text: "Hallway\n x5 +  x23 +  x55",
 				}
 			),
 			new Button(
 				{
 					id: "turn_l",
-					text: "Turn Left\n x8 +  x16",
+					text: "Turn Left\n x5 +  x23 +  x55",
 				}
 			),
 			new Button(
 				{
 					id: "turn_r",
-					text: "Turn Right\n x8 +  x16",
+					text: "Turn Right\n x5 +  x23 +  x55",
 				}
 			),
 		],
@@ -97,16 +97,19 @@ const build = ( player, block, l, r, n, s ) => {
         (response) => {
 			player.removeTag("inUI");
             if(response.canceled) return;
+			
+			if (
+				player.getItemCount( "lunar:gold_insulation" ) < 5
+				|| player.getItemCount( "lunar:scrap_metal" ) < 23
+				|| player.getItemCount( "lunar:steel_sheet" ) < 55
+			) return player.sendMessage( "§cNot enough items!§r" );
+					
+			player.runCommandAsync( "clear @s lunar:gold_insulation 0 5" );
+			player.runCommandAsync( "clear @s lunar:scrap_metal 0 23" );
+			player.runCommandAsync( "clear @s lunar:steel_sheet 0 55" );
+			
             switch(response.selection.customId) {
 				case "4way":
-					/*if (
-						player.getItemCount( "minecraft:log" ) < 8
-						|| player.getItemCount( "minecraft:stick" ) < 16
-					) return player.sendMessage( "§cNot enough items!§r" );
-					
-					player.runCommandAsync( "clear @s log 0 8" );
-					player.runCommandAsync( "clear @s stick 0 16" );*/
-					
                     if (l) {
 						const blocks = getBlocks(
 							{
