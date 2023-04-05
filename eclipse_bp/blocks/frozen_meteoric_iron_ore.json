@@ -14,7 +14,6 @@
       "minecraft:destructible_by_mining": {
         "seconds_to_destroy": 2
       },
-	"tag:lunar:basic_extractable": {},
       "minecraft:material_instances": {
         "*": {
           "texture": "frozen_meteoric_iron_ore",

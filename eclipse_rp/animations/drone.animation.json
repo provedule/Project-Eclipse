@@ -1,7 +1,46 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"drone_charging": {
+		"animation.drone.up": {
+			"loop": true,
+			"animation_length": 0.5,
+			"bones": {
+				"Lwing": {
+					"rotation": [-10, 0, 0]
+				},
+				"Rwing": {
+					"rotation": [10, 0, 0]
+				},
+				"lidar": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.5": [0, 365, 0]
+					}
+				}
+			}
+		},
+		"animation.drone.forward": {
+			"loop": true,
+			"animation_length": 1,
+			"bones": {
+				"body": {
+					"rotation": [2.5, 0, 0]
+				},
+				"Lwing": {
+					"rotation": [15, 0, 0]
+				},
+				"Rwing": {
+					"rotation": [15, 0, 0]
+				},
+				"lidar": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"1.0": [0, 365, 0]
+					}
+				}
+			}
+		},
+		"animation.drone.charging": {
 			"loop": "hold_on_last_frame",
 			"animation_length": 2,
 			"bones": {
@@ -122,6 +161,27 @@
 				},
 				"beamcaster": {
 					"position": [0, -2, 0]
+				}
+			}
+		},
+		"animation.drone.build": {
+			"loop": true,
+			"animation_length": 0.5,
+			"bones": {
+				"body": {
+					"rotation": [0, 0, 2.5]
+				},
+				"Lwing": {
+					"rotation": [0, 0, 10]
+				},
+				"Rwing": {
+					"rotation": [0, 0, 10]
+				},
+				"lidar": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.5": [0, 365, 0]
+					}
 				}
 			}
 		}

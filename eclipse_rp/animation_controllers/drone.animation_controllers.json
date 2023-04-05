@@ -1,0 +1,37 @@
+{
+  "format_version": "1.19.0",
+  "animation_controllers": {
+    "controller.animation.drone": {
+      "states": {
+        "default": {
+          "transitions": [
+            { "charging": "query.has_target" },
+            { "up": "query.vertical_speed > 0" },
+            { "flying": "query.is_moving" }
+          ],
+          "blend_transition": 1
+        },
+        "charging": {
+          "animations": ["drone_charging"],
+          "transitions": [{ "default": "query.all_animations_finished" }],
+          "blend_transition": 4
+        },
+        "flying": {
+          "animations": ["drone_forward"],
+          "transitions": [{ "default": "query.all_animations_finished" }],
+          "blend_transition": 1
+        },
+        "up": {
+          "animations": ["drone_up"],
+          "transitions": [{ "default": "query.all_animations_finished" }],
+          "blend_transition": 1
+        },
+        "building": {
+          "animations": ["drone_build"],
+          "transitions": [{ "default": "query.all_animations_finished" }],
+          "blend_transition": 1
+        }
+      }
+    }
+  }
+}

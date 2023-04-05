@@ -1,6 +1,6 @@
 entity.eclipse:asteroid.name=Asteroid
 
-entity.eclipse:drone_monster.name=Drone Monster
+entity.eclipse:drone.name=Drone
 entity.eclipse:giant.name=Giant
 
 entity.eclipse:meteor.name=Meteor
