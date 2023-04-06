@@ -97,11 +97,31 @@
     },
     "events": {
       "asteroid:despawn": {
-        "add": {
-          "component_groups": [
-            "please:despawn"
-          ]
-        }
+	  "sequence": [
+	    {
+	      "randomize": [
+	        {
+		    "weight": 7,
+		    "run_command": {
+		      "command": "structure load smallcrater1 ~-31 ~-15 ~-31"
+		    }
+	        },
+	        {
+		    "weight": 3,
+		    "run_command": {
+		      "command": "structure load bigcrater1 ~-63 ~-31 ~-63"
+		    }
+	        }
+	      ]
+	    },
+	    {
+            "add": {
+              "component_groups": [
+                "please:despawn"
+              ]
+            }
+	    }
+	  ]
       },
       "asteroid:camera_shake": {
         "add": {
