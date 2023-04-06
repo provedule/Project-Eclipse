@@ -6,34 +6,160 @@ system.events.beforeWatchdogTerminate.subscribe(
 );
 
 const allowedBlocks = [
-	"test:structure_builder_n",
-	"test:structure_builder_s",
-	"test:structure_builder_r",
-	"test:structure_builder_l",
+	"lunar:structure_builder",
 ];
+
+world.events.beforeItemUse.subscribe(
+    (data) => {
+		const { source: player, item } = data;
+		const rotationY = player.getRotation().y.toFixed(0);
+		
+		const block = {
+			location: {
+				x: player.location.x,
+				y: player.location.y,
+				z: player.location.z,
+			},
+			dimension: player.dimension,
+			setType: () => null,
+		};
+		
+		if (item?.typeId == "lunar:steel_hammer") {
+			if (
+				rotationY <= 45
+				&& rotationY >= -45
+			) hammerBuild(player, block, false, false, true, false);
+			else if (
+				rotationY <= -45
+				&& rotationY >= -135
+			) hammerBuild(player, block, true, false, false, false);
+			else if (
+				rotationY <= -135
+				|| rotationY >= 135
+			) hammerBuild(player, block, false, false, false, true);
+			else if (
+				rotationY <= 135
+				&& rotationY >= 45
+			) hammerBuild(player, block, false, true, false, false);
+		};
+    },
+);
+
 world.events.beforeItemUseOn.subscribe(
     (data) => {
 		const { source: player, item } = data;
-        const block = player.getBlockFromViewDirection();
+		const block = player.getBlockFromViewDirection();
 		if(player.isSneaking) return;
 		if(allowedBlocks.includes(block?.typeId)) data.cancel = true;
 		
-        switch(block?.typeId) {
-            case "test:structure_builder_n":
-                build(player, block, false, false, true, false);
-			break;
-			case "test:structure_builder_s":
-                build(player, block, false, false, false, true);
-			break;
-            case "test:structure_builder_r":
-                build(player, block, false, true, false, false);
-			break;
-            case "test:structure_builder_l":
-                build(player, block, true, false, false, false);
-			break;
-        };
+		const rotationY = player.getRotation().y.toFixed(0);
+		if (block?.typeId == "lunar:structure_builder") {
+			if (
+				rotationY <= 45
+				&& rotationY >= -45
+			) build(player, block, false, false, true, false);
+			else if (
+				rotationY <= -45
+				&& rotationY >= -135
+			) build(player, block, true, false, false, false);
+			else if (
+				rotationY <= -135
+				|| rotationY >= 135
+			) build(player, block, false, false, false, true);
+			else if (
+				rotationY <= 135
+				&& rotationY >= 45
+			) build(player, block, false, true, false, false);
+		};
     },
 );
+
+system.runInterval(
+    () => {
+        for (const player of world.getAllPlayers()) {
+			const block = player.getBlockFromViewDirection();
+			const rotationY = player.getRotation().y.toFixed(0);
+			if (block?.typeId == "lunar:structure_builder") {
+				if (
+					rotationY <= 45
+					&& rotationY >= -45
+				) spawnEdgeParticles(
+					{
+						x: block.location.x,
+						y: block.location.y,
+						z: block.location.z + 1,
+					},
+					{
+						x: block.location.x + 1,
+						y: block.location.y + 1,
+						z: block.location.z + 2,
+					},
+					block.dimension,
+					"test:white",
+				);
+				else if (
+					rotationY <= -45
+					&& rotationY >= -135
+				) spawnEdgeParticles(
+					{
+						x: block.location.x + 1,
+						y: block.location.y,
+						z: block.location.z,
+					},
+					{
+						x: block.location.x + 2,
+						y: block.location.y + 1,
+						z: block.location.z + 1,
+					},
+					block.dimension,
+					"test:white",
+				);
+				else if (
+					rotationY <= -135
+					|| rotationY >= 135
+				) spawnEdgeParticles(
+					{
+						x: block.location.x,
+						y: block.location.y,
+						z: block.location.z,
+					},
+					{
+						x: block.location.x + 1,
+						y: block.location.y + 1,
+						z: block.location.z - 1,
+					},
+					block.dimension,
+					"test:white",
+				);
+				else if (
+					rotationY <= 135
+					&& rotationY >= 45
+				) spawnEdgeParticles(
+					{
+						x: block.location.x,
+						y: block.location.y,
+						z: block.location.z,
+					},
+					{
+						x: block.location.x - 1,
+						y: block.location.y + 1,
+						z: block.location.z + 1,
+					},
+					block.dimension,
+					"test:white",
+				);
+			};
+		};
+    },
+);
+
+// - Gold Insulation
+// - Steel Sheet Block
+// - Steel Block
+// - Laser
+// - CPU
+// - Silicon Crystal
+// - Metasteel
 
 const build = ( player, block, l, r, n, s ) => {
 	if (player.hasTag("inUI")) return;
@@ -45,49 +171,49 @@ const build = ( player, block, l, r, n, s ) => {
 			new Button(
 				{
 					id: "4way",
-					text: "4 Way\n x5 +  x23 +  x55",
+					text: "4 Way\n x12  x6  x16",
 				}
 			),
-			new Button(
+			/*new Button(
 				{
 					id: "chamber",
 					text: "Chamber\n x5 +  x23 +  x55",
 				}
-			),
+			),*/
 			new Button(
 				{
 					id: "antechamber",
-					text: "Antechamber\n x5 +  x23 +  x55",
-				}
-			),
-			new Button(
-				{
-					id: "battery",
-					text: "Battery\n x5 +  x23 +  x55",
+					text: "Antechamber\n x128  x64  x64  x1  x1",
 				}
 			),
 			new Button(
 				{
 					id: "craftingroom",
-					text: "Crafting Room\n x5 +  x23 +  x55",
+					text: "Crafting Room\n x32  x32  x32  x1",
 				}
 			),
 			new Button(
 				{
 					id: "hallway",
-					text: "Hallway\n x5 +  x23 +  x55",
+					text: "Hallway\n x12  x6  x16",
 				}
 			),
 			new Button(
 				{
 					id: "turn_l",
-					text: "Turn Left\n x5 +  x23 +  x55",
+					text: "Turn Left\n x12  x6  x16",
 				}
 			),
 			new Button(
 				{
 					id: "turn_r",
-					text: "Turn Right\n x5 +  x23 +  x55",
+					text: "Turn Right\n x12  x6  x16",
+				}
+			),
+			new Button(
+				{
+					id: "waterroom",
+					text: "Water Room\n x64  x64  x32",
 				}
 			),
 		],
@@ -98,16 +224,6 @@ const build = ( player, block, l, r, n, s ) => {
 			player.removeTag("inUI");
             if(response.canceled) return;
 			
-			if (
-				player.getItemCount( "lunar:gold_insulation" ) < 5
-				|| player.getItemCount( "lunar:scrap_metal" ) < 23
-				|| player.getItemCount( "lunar:steel_sheet" ) < 55
-			) return player.sendMessage( "§cNot enough items!§r" );
-					
-			player.runCommandAsync( "clear @s lunar:gold_insulation 0 5" );
-			player.runCommandAsync( "clear @s lunar:scrap_metal 0 23" );
-			player.runCommandAsync( "clear @s lunar:steel_sheet 0 55" );
-			
             switch(response.selection.customId) {
 				case "4way":
                     if (l) {
@@ -115,12 +231,12 @@ const build = ( player, block, l, r, n, s ) => {
 							{
 								x: block.location.x + 17,
 								y: block.location.y - 1,
-								z: block.location.z - 12,
+								z: block.location.z - 8,
 							},
 							{
 								x: block.location.x + 1,
 								y: block.location.y + 11,
-								z: block.location.z + 12,
+								z: block.location.z + 8,
 							},
 							block.dimension,
 						);
@@ -145,6 +261,16 @@ const build = ( player, block, l, r, n, s ) => {
 							
 							return player.sendMessage("Blocks in the direction!");
 						};
+						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 6
+							|| player.getItemCount( "lunar:metasteel" ) < 16
+							|| player.getItemCount( "lunar:steel_sheet" ) < 12
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 6" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 16" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 12" );
 						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
@@ -159,12 +285,12 @@ const build = ( player, block, l, r, n, s ) => {
 							{
 								x: block.location.x - 17,
 								y: block.location.y - 1,
-								z: block.location.z - 12,
+								z: block.location.z - 8,
 							},
 							{
 								x: block.location.x - 1,
 								y: block.location.y + 11,
-								z: block.location.z + 12,
+								z: block.location.z + 8,
 							},
 							block.dimension,
 						);
@@ -190,6 +316,16 @@ const build = ( player, block, l, r, n, s ) => {
 							return player.sendMessage("Blocks in the direction!");
 						};
 						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 6
+							|| player.getItemCount( "lunar:metasteel" ) < 16
+							|| player.getItemCount( "lunar:steel_sheet" ) < 12
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 6" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 16" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 12" );
+						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
                             "structure load ecli_4way "
@@ -201,12 +337,12 @@ const build = ( player, block, l, r, n, s ) => {
                     } else if (n) {
 						const blocks = getBlocks(
 							{
-								x: block.location.x - 12,
+								x: block.location.x - 8,
 								y: block.location.y - 1,
 								z: block.location.z + 17,
 							},
 							{
-								x: block.location.x + 12,
+								x: block.location.x + 8,
 								y: block.location.y + 11,
 								z: block.location.z + 1,
 							},
@@ -234,6 +370,16 @@ const build = ( player, block, l, r, n, s ) => {
 							return player.sendMessage("Blocks in the direction!");
 						};
 						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 6
+							|| player.getItemCount( "lunar:metasteel" ) < 16
+							|| player.getItemCount( "lunar:steel_sheet" ) < 12
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 6" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 16" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 12" );
+						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
                             "structure load ecli_4way "
@@ -245,12 +391,12 @@ const build = ( player, block, l, r, n, s ) => {
                     } else if (s) {
 						const blocks = getBlocks(
 							{
-								x: block.location.x - 12,
+								x: block.location.x - 8,
 								y: block.location.y - 1,
 								z: block.location.z - 17,
 							},
 							{
-								x: block.location.x + 12,
+								x: block.location.x + 8,
 								y: block.location.y + 11,
 								z: block.location.z - 1,
 							},
@@ -278,6 +424,16 @@ const build = ( player, block, l, r, n, s ) => {
 							return player.sendMessage("Blocks in the direction!");
 						};
 						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 6
+							|| player.getItemCount( "lunar:metasteel" ) < 16
+							|| player.getItemCount( "lunar:steel_sheet" ) < 12
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 6" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 16" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 12" );
+						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
                             "structure load ecli_4way "
@@ -288,7 +444,7 @@ const build = ( player, block, l, r, n, s ) => {
                         );
                     };
                 break;
-				case "chamber":
+				/*case "chamber":
                     if (l) {
 						const blocks = getBlocks(
 							{
@@ -324,6 +480,16 @@ const build = ( player, block, l, r, n, s ) => {
 							
 							return player.sendMessage("Blocks in the direction!");
 						};
+						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 6
+							|| player.getItemCount( "lunar:metasteel" ) < 16
+							|| player.getItemCount( "lunar:steel_sheet" ) < 12
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 6" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 16" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 12" );
 						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
@@ -368,6 +534,15 @@ const build = ( player, block, l, r, n, s ) => {
 							
 							return player.sendMessage("Blocks in the direction!");
 						};
+						if (
+				player.getItemCount( "lunar:gold_insulation" ) < 5
+				|| player.getItemCount( "lunar:scrap_metal" ) < 23
+				|| player.getItemCount( "lunar:steel_sheet" ) < 55
+			) return player.sendMessage( "§cNot enough items!§r" );
+					
+			player.runCommandAsync( "clear @s lunar:gold_insulation 0 5" );
+			player.runCommandAsync( "clear @s lunar:scrap_metal 0 23" );
+			player.runCommandAsync( "clear @s lunar:steel_sheet 0 55" );
 						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
@@ -412,7 +587,15 @@ const build = ( player, block, l, r, n, s ) => {
 							
 							return player.sendMessage("Blocks in the direction!");
 						};
-						
+						if (
+				player.getItemCount( "lunar:gold_insulation" ) < 5
+				|| player.getItemCount( "lunar:scrap_metal" ) < 23
+				|| player.getItemCount( "lunar:steel_sheet" ) < 55
+			) return player.sendMessage( "§cNot enough items!§r" );
+					
+			player.runCommandAsync( "clear @s lunar:gold_insulation 0 5" );
+			player.runCommandAsync( "clear @s lunar:scrap_metal 0 23" );
+			player.runCommandAsync( "clear @s lunar:steel_sheet 0 55" );
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
                             "structure load ecli_chamber "
@@ -456,7 +639,16 @@ const build = ( player, block, l, r, n, s ) => {
 							
 							return player.sendMessage("Blocks in the direction!");
 						};
-						
+						if (
+				player.getItemCount( "lunar:gold_insulation" ) < 5
+				|| player.getItemCount( "lunar:scrap_metal" ) < 23
+				|| player.getItemCount( "lunar:steel_sheet" ) < 55
+			) return player.sendMessage( "§cNot enough items!§r" );
+					
+			player.runCommandAsync( "clear @s lunar:gold_insulation 0 5" );
+			player.runCommandAsync( "clear @s lunar:scrap_metal 0 23" );
+			player.runCommandAsync( "clear @s lunar:steel_sheet 0 55" );
+			
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
                             "structure load ecli_chamber "
@@ -466,7 +658,7 @@ const build = ( player, block, l, r, n, s ) => {
 							+ " 90_degrees none"
                         );
                     };
-                break;
+                break;*/
 				case "antechamber":
                     if (l) {
 						const blocks = getBlocks(
@@ -503,6 +695,20 @@ const build = ( player, block, l, r, n, s ) => {
 							
 							return player.sendMessage("Blocks in the direction!");
 						};
+						
+						if (
+							player.getItemCount( "lunar:laser" ) < 1
+							|| player.getItemCount( "lunar:cpu" ) < 1
+							|| player.getItemCount( "lunar:metasteel" ) < 64
+							|| player.getItemCount( "lunar:steel_block" ) < 64
+							|| player.getItemCount( "lunar:steel_sheet" ) < 128
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:laser 0 1" );
+						player.runCommandAsync( "clear @s lunar:cpu 0 1" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 64" );
+						player.runCommandAsync( "clear @s lunar:steel_block 0 64" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 128" );
 						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
@@ -547,6 +753,20 @@ const build = ( player, block, l, r, n, s ) => {
 							
 							return player.sendMessage("Blocks in the direction!");
 						};
+						
+						if (
+							player.getItemCount( "lunar:laser" ) < 1
+							|| player.getItemCount( "lunar:cpu" ) < 1
+							|| player.getItemCount( "lunar:metasteel" ) < 64
+							|| player.getItemCount( "lunar:steel_block" ) < 64
+							|| player.getItemCount( "lunar:steel_sheet" ) < 128
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:laser 0 1" );
+						player.runCommandAsync( "clear @s lunar:cpu 0 1" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 64" );
+						player.runCommandAsync( "clear @s lunar:steel_block 0 64" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 128" );
 						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
@@ -592,6 +812,20 @@ const build = ( player, block, l, r, n, s ) => {
 							return player.sendMessage("Blocks in the direction!");
 						};
 						
+						if (
+							player.getItemCount( "lunar:laser" ) < 1
+							|| player.getItemCount( "lunar:cpu" ) < 1
+							|| player.getItemCount( "lunar:metasteel" ) < 64
+							|| player.getItemCount( "lunar:steel_block" ) < 64
+							|| player.getItemCount( "lunar:steel_sheet" ) < 128
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:laser 0 1" );
+						player.runCommandAsync( "clear @s lunar:cpu 0 1" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 64" );
+						player.runCommandAsync( "clear @s lunar:steel_block 0 64" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 128" );
+						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
                             "structure load ecli_antechamber "
@@ -636,6 +870,20 @@ const build = ( player, block, l, r, n, s ) => {
 							return player.sendMessage("Blocks in the direction!");
 						};
 						
+						if (
+							player.getItemCount( "lunar:laser" ) < 1
+							|| player.getItemCount( "lunar:cpu" ) < 1
+							|| player.getItemCount( "lunar:metasteel" ) < 64
+							|| player.getItemCount( "lunar:steel_block" ) < 64
+							|| player.getItemCount( "lunar:steel_sheet" ) < 128
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:laser 0 1" );
+						player.runCommandAsync( "clear @s lunar:cpu 0 1" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 64" );
+						player.runCommandAsync( "clear @s lunar:steel_block 0 64" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 128" );
+						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
                             "structure load ecli_antechamber "
@@ -643,185 +891,6 @@ const build = ( player, block, l, r, n, s ) => {
                             + (block.location.y - 1) + " "
                             + (block.location.z - 35)
 							+ " 0_degrees none"
-                        );
-                    };
-                break;
-				case "battery":
-                    if (l) {
-						const blocks = getBlocks(
-							{
-								x: block.location.x + 6,
-								y: block.location.y - 1,
-								z: block.location.z - 2,
-							},
-							{
-								x: block.location.x + 1,
-								y: block.location.y + 5,
-								z: block.location.z + 2,
-							},
-							block.dimension,
-						);
-						
-						if (blocks.length > 0) {
-							for (const block of blocks) {
-								spawnEdgeParticles(
-									{
-										x: block.location.x,
-										y: block.location.y,
-										z: block.location.z,
-									},
-									{
-										x: block.location.x + 1,
-										y: block.location.y + 1,
-										z: block.location.z + 1,
-									},
-									block.dimension,
-									"test:red",
-								);
-							};
-							
-							return player.sendMessage("Blocks in the direction!");
-						};
-						
-						block.setType(MinecraftBlockTypes.air);
-						player.runCommandAsync(
-                            "structure load ecli_battery "
-							+ (block.location.x + 1) + " "
-                            + (block.location.y - 1) + " "
-                            + (block.location.z - 2)
-							+ " 0_degrees none block_by_block 5"
-                        );
-                    } else if (r) {
-                        const blocks = getBlocks(
-							{
-								x: block.location.x - 6,
-								y: block.location.y - 1,
-								z: block.location.z - 2,
-							},
-							{
-								x: block.location.x - 1,
-								y: block.location.y + 5,
-								z: block.location.z + 2,
-							},
-							block.dimension,
-						);
-						
-						if (blocks.length > 0) {
-							for (const block of blocks) {
-								spawnEdgeParticles(
-									{
-										x: block.location.x,
-										y: block.location.y,
-										z: block.location.z,
-									},
-									{
-										x: block.location.x + 1,
-										y: block.location.y + 1,
-										z: block.location.z + 1,
-									},
-									block.dimension,
-									"test:red",
-								);
-							};
-							
-							return player.sendMessage("Blocks in the direction!");
-						};
-						
-						block.setType(MinecraftBlockTypes.air);
-						player.runCommandAsync(
-                            "structure load ecli_battery "
-                            + (block.location.x - 6) + " "
-                            + (block.location.y - 1) + " "
-                            + (block.location.z - 2)
-							+ " 180_degrees none block_by_block 5"
-                        );
-                    } else if (n) {
-						const blocks = getBlocks(
-							{
-								x: block.location.x - 2,
-								y: block.location.y - 1,
-								z: block.location.z + 6,
-							},
-							{
-								x: block.location.x + 2,
-								y: block.location.y + 5,
-								z: block.location.z + 1,
-							},
-							block.dimension,
-						);
-						
-						if (blocks.length > 0) {
-							for (const block of blocks) {
-								spawnEdgeParticles(
-									{
-										x: block.location.x,
-										y: block.location.y,
-										z: block.location.z,
-									},
-									{
-										x: block.location.x + 1,
-										y: block.location.y + 1,
-										z: block.location.z + 1,
-									},
-									block.dimension,
-									"test:red",
-								);
-							};
-							
-							return player.sendMessage("Blocks in the direction!");
-						};
-						
-						block.setType(MinecraftBlockTypes.air);
-						player.runCommandAsync(
-                            "structure load ecli_battery "
-                            + (block.location.x - 2) + " "
-                            + (block.location.y - 1) + " "
-                            + (block.location.z + 1)
-							+ " 90_degrees none block_by_block 5"
-                        );
-                    } else if (s) {
-						const blocks = getBlocks(
-							{
-								x: block.location.x - 2,
-								y: block.location.y - 1,
-								z: block.location.z - 6,
-							},
-							{
-								x: block.location.x + 2,
-								y: block.location.y + 5,
-								z: block.location.z - 1,
-							},
-							block.dimension,
-						);
-						
-						if (blocks.length > 0) {
-							for (const block of blocks) {
-								spawnEdgeParticles(
-									{
-										x: block.location.x,
-										y: block.location.y,
-										z: block.location.z,
-									},
-									{
-										x: block.location.x + 1,
-										y: block.location.y + 1,
-										z: block.location.z + 1,
-									},
-									block.dimension,
-									"test:red",
-								);
-							};
-							
-							return player.sendMessage("Blocks in the direction!");
-						};
-						
-						block.setType(MinecraftBlockTypes.air);
-						player.runCommandAsync(
-                            "structure load ecli_battery "
-                            + (block.location.x - 2) + " "
-                            + (block.location.y - 1) + " "
-                            + (block.location.z - 6)
-							+ " 270_degrees none block_by_block 5"
                         );
                     };
                 break;
@@ -861,6 +930,18 @@ const build = ( player, block, l, r, n, s ) => {
 							
 							return player.sendMessage("Blocks in the direction!");
 						};
+						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 32
+							|| player.getItemCount( "lunar:cpu" ) < 1
+							|| player.getItemCount( "lunar:metasteel" ) < 32
+							|| player.getItemCount( "lunar:steel_sheet" ) < 32
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 32" );
+						player.runCommandAsync( "clear @s lunar:cpu 0 1" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 32" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 32" );
 						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
@@ -906,6 +987,18 @@ const build = ( player, block, l, r, n, s ) => {
 							return player.sendMessage("Blocks in the direction!");
 						};
 						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 32
+							|| player.getItemCount( "lunar:cpu" ) < 1
+							|| player.getItemCount( "lunar:metasteel" ) < 32
+							|| player.getItemCount( "lunar:steel_sheet" ) < 32
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 32" );
+						player.runCommandAsync( "clear @s lunar:cpu 0 1" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 32" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 32" );
+						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
                             "structure load ecli_craftingroom "
@@ -950,6 +1043,18 @@ const build = ( player, block, l, r, n, s ) => {
 							return player.sendMessage("Blocks in the direction!");
 						};
 						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 32
+							|| player.getItemCount( "lunar:cpu" ) < 1
+							|| player.getItemCount( "lunar:metasteel" ) < 32
+							|| player.getItemCount( "lunar:steel_sheet" ) < 32
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 32" );
+						player.runCommandAsync( "clear @s lunar:cpu 0 1" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 32" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 32" );
+						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
                             "structure load ecli_craftingroom "
@@ -993,6 +1098,18 @@ const build = ( player, block, l, r, n, s ) => {
 							
 							return player.sendMessage("Blocks in the direction!");
 						};
+						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 32
+							|| player.getItemCount( "lunar:cpu" ) < 1
+							|| player.getItemCount( "lunar:metasteel" ) < 32
+							|| player.getItemCount( "lunar:steel_sheet" ) < 32
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 32" );
+						player.runCommandAsync( "clear @s lunar:cpu 0 1" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 32" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 32" );
 						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
@@ -1041,13 +1158,23 @@ const build = ( player, block, l, r, n, s ) => {
 							return player.sendMessage("Blocks in the direction!");
 						};
 						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 6
+							|| player.getItemCount( "lunar:metasteel" ) < 16
+							|| player.getItemCount( "lunar:steel_sheet" ) < 12
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 6" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 16" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 12" );
+						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
                             "structure load ecli_hallway "
 							+ (block.location.x + 1) + " "
                             + (block.location.y - 1) + " "
                             + (block.location.z - 3)
-							+ " 0_degrees none"
+							+ " 270_degrees none"
                         );
                     } else if (r) {
                         const blocks = getBlocks(
@@ -1084,6 +1211,16 @@ const build = ( player, block, l, r, n, s ) => {
 							
 							return player.sendMessage("Blocks in the direction!");
 						};
+						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 6
+							|| player.getItemCount( "lunar:metasteel" ) < 16
+							|| player.getItemCount( "lunar:steel_sheet" ) < 12
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 6" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 16" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 12" );
 						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
@@ -1129,6 +1266,16 @@ const build = ( player, block, l, r, n, s ) => {
 							return player.sendMessage("Blocks in the direction!");
 						};
 						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 6
+							|| player.getItemCount( "lunar:metasteel" ) < 16
+							|| player.getItemCount( "lunar:steel_sheet" ) < 12
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 6" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 16" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 12" );
+						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
                             "structure load ecli_hallway "
@@ -1172,6 +1319,16 @@ const build = ( player, block, l, r, n, s ) => {
 							
 							return player.sendMessage("Blocks in the direction!");
 						};
+						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 6
+							|| player.getItemCount( "lunar:metasteel" ) < 16
+							|| player.getItemCount( "lunar:steel_sheet" ) < 12
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 6" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 16" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 12" );
 						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
@@ -1220,6 +1377,16 @@ const build = ( player, block, l, r, n, s ) => {
 							return player.sendMessage("Blocks in the direction!");
 						};
 						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 6
+							|| player.getItemCount( "lunar:metasteel" ) < 16
+							|| player.getItemCount( "lunar:steel_sheet" ) < 12
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 6" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 16" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 12" );
+						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
                             "structure load ecli_turn "
@@ -1263,6 +1430,16 @@ const build = ( player, block, l, r, n, s ) => {
 							
 							return player.sendMessage("Blocks in the direction!");
 						};
+						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 6
+							|| player.getItemCount( "lunar:metasteel" ) < 16
+							|| player.getItemCount( "lunar:steel_sheet" ) < 12
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 6" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 16" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 12" );
 						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
@@ -1308,6 +1485,16 @@ const build = ( player, block, l, r, n, s ) => {
 							return player.sendMessage("Blocks in the direction!");
 						};
 						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 6
+							|| player.getItemCount( "lunar:metasteel" ) < 16
+							|| player.getItemCount( "lunar:steel_sheet" ) < 12
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 6" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 16" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 12" );
+						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
                             "structure load ecli_turn "
@@ -1351,6 +1538,16 @@ const build = ( player, block, l, r, n, s ) => {
 							
 							return player.sendMessage("Blocks in the direction!");
 						};
+						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 6
+							|| player.getItemCount( "lunar:metasteel" ) < 16
+							|| player.getItemCount( "lunar:steel_sheet" ) < 12
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 6" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 16" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 12" );
 						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
@@ -1399,6 +1596,16 @@ const build = ( player, block, l, r, n, s ) => {
 							return player.sendMessage("Blocks in the direction!");
 						};
 						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 6
+							|| player.getItemCount( "lunar:metasteel" ) < 16
+							|| player.getItemCount( "lunar:steel_sheet" ) < 12
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 6" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 16" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 12" );
+						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
                             "structure load ecli_turn "
@@ -1442,6 +1649,16 @@ const build = ( player, block, l, r, n, s ) => {
 							
 							return player.sendMessage("Blocks in the direction!");
 						};
+						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 6
+							|| player.getItemCount( "lunar:metasteel" ) < 16
+							|| player.getItemCount( "lunar:steel_sheet" ) < 12
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 6" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 16" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 12" );
 						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
@@ -1487,6 +1704,16 @@ const build = ( player, block, l, r, n, s ) => {
 							return player.sendMessage("Blocks in the direction!");
 						};
 						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 6
+							|| player.getItemCount( "lunar:metasteel" ) < 16
+							|| player.getItemCount( "lunar:steel_sheet" ) < 12
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 6" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 16" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 12" );
+						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
                             "structure load ecli_turn "
@@ -1531,6 +1758,16 @@ const build = ( player, block, l, r, n, s ) => {
 							return player.sendMessage("Blocks in the direction!");
 						};
 						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 6
+							|| player.getItemCount( "lunar:metasteel" ) < 16
+							|| player.getItemCount( "lunar:steel_sheet" ) < 12
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 6" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 16" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 12" );
+						
 						block.setType(MinecraftBlockTypes.air);
 						player.runCommandAsync(
                             "structure load ecli_turn "
@@ -1538,6 +1775,471 @@ const build = ( player, block, l, r, n, s ) => {
                             + (block.location.y - 1) + " "
                             + (block.location.z - 12)
 							+ " 0_degrees none"
+                        );
+                    };
+                break;
+				case "waterroom":
+                    if (l) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x + 17,
+								y: block.location.y - 1,
+								z: block.location.z - 12,
+							},
+							{
+								x: block.location.x + 1,
+								y: block.location.y + 11,
+								z: block.location.z + 12,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 64
+							|| player.getItemCount( "lunar:metasteel" ) < 32
+							|| player.getItemCount( "lunar:steel_sheet" ) < 64
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 64" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 32" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 64" );
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_waterroom "
+							+ (block.location.x + 1) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 14)
+							+ " 0_degrees none"
+                        );
+                    } else if (r) {
+                        const blocks = getBlocks(
+							{
+								x: block.location.x - 17,
+								y: block.location.y - 1,
+								z: block.location.z - 12,
+							},
+							{
+								x: block.location.x - 1,
+								y: block.location.y + 11,
+								z: block.location.z + 12,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 64
+							|| player.getItemCount( "lunar:metasteel" ) < 32
+							|| player.getItemCount( "lunar:steel_sheet" ) < 64
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 64" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 32" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 64" );
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_waterroom "
+                            + (block.location.x - 25) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 14)
+							+ " 0_degrees none"
+                        );
+                    } else if (n) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x - 12,
+								y: block.location.y - 1,
+								z: block.location.z + 17,
+							},
+							{
+								x: block.location.x + 12,
+								y: block.location.y + 11,
+								z: block.location.z + 1,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 64
+							|| player.getItemCount( "lunar:metasteel" ) < 32
+							|| player.getItemCount( "lunar:steel_sheet" ) < 64
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 64" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 32" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 64" );
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_waterroom "
+                            + (block.location.x - 14) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z + 1)
+							+ " 90_degrees none"
+                        );
+                    } else if (s) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x - 12,
+								y: block.location.y - 1,
+								z: block.location.z - 17,
+							},
+							{
+								x: block.location.x + 12,
+								y: block.location.y + 11,
+								z: block.location.z - 1,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						if (
+							player.getItemCount( "lunar:gold_insulation" ) < 64
+							|| player.getItemCount( "lunar:metasteel" ) < 32
+							|| player.getItemCount( "lunar:steel_sheet" ) < 64
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:gold_insulation 0 64" );
+						player.runCommandAsync( "clear @s lunar:metasteel 0 32" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 64" );
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_waterroom "
+                            + (block.location.x - 14) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 25)
+							+ " 90_degrees none"
+                        );
+                    };
+                break;
+			};
+        },
+    );
+};
+
+const hammerBuild = ( player, block, l, r, n, s ) => {
+	if (player.hasTag("inUI")) return;
+	
+	player.addTag("inUI");
+    new ActionFormData({ title: "Choose a Structure" })
+    .addButtons(
+		[
+			new Button(
+				{
+					id: "battery",
+					text: "Battery\n x6  x16  x1",
+				}
+			),
+		],
+	)
+    .open(player)
+    .then(
+        (response) => {
+			player.removeTag("inUI");
+            if(response.canceled) return;
+			
+            switch(response.selection.customId) {
+				case "battery":
+                    if (l) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x + 6,
+								y: block.location.y - 1,
+								z: block.location.z - 2,
+							},
+							{
+								x: block.location.x + 1,
+								y: block.location.y + 5,
+								z: block.location.z + 2,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						if (
+							player.getItemCount( "lunar:silicon_crystal" ) < 16
+							|| player.getItemCount( "lunar:cpu" ) < 1
+							|| player.getItemCount( "lunar:steel_sheet" ) < 6
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:silicon_crystal 0 16" );
+						player.runCommandAsync( "clear @s lunar:cpu 0 1" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 6" );
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_battery "
+							+ (block.location.x + 1) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 2)
+							+ " 0_degrees none block_by_block 5"
+                        );
+                    } else if (r) {
+                        const blocks = getBlocks(
+							{
+								x: block.location.x - 6,
+								y: block.location.y - 1,
+								z: block.location.z - 2,
+							},
+							{
+								x: block.location.x - 1,
+								y: block.location.y + 5,
+								z: block.location.z + 2,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						if (
+							player.getItemCount( "lunar:silicon_crystal" ) < 16
+							|| player.getItemCount( "lunar:cpu" ) < 1
+							|| player.getItemCount( "lunar:steel_sheet" ) < 6
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:silicon_crystal 0 16" );
+						player.runCommandAsync( "clear @s lunar:cpu 0 1" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 6" );
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_battery "
+                            + (block.location.x - 6) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 2)
+							+ " 180_degrees none block_by_block 5"
+                        );
+                    } else if (n) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x - 2,
+								y: block.location.y - 1,
+								z: block.location.z + 6,
+							},
+							{
+								x: block.location.x + 2,
+								y: block.location.y + 5,
+								z: block.location.z + 1,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						if (
+							player.getItemCount( "lunar:silicon_crystal" ) < 16
+							|| player.getItemCount( "lunar:cpu" ) < 1
+							|| player.getItemCount( "lunar:steel_sheet" ) < 6
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:silicon_crystal 0 16" );
+						player.runCommandAsync( "clear @s lunar:cpu 0 1" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 6" );
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_battery "
+                            + (block.location.x - 2) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z + 1)
+							+ " 90_degrees none block_by_block 5"
+                        );
+                    } else if (s) {
+						const blocks = getBlocks(
+							{
+								x: block.location.x - 2,
+								y: block.location.y - 1,
+								z: block.location.z - 6,
+							},
+							{
+								x: block.location.x + 2,
+								y: block.location.y + 5,
+								z: block.location.z - 1,
+							},
+							block.dimension,
+						);
+						
+						if (blocks.length > 0) {
+							for (const block of blocks) {
+								spawnEdgeParticles(
+									{
+										x: block.location.x,
+										y: block.location.y,
+										z: block.location.z,
+									},
+									{
+										x: block.location.x + 1,
+										y: block.location.y + 1,
+										z: block.location.z + 1,
+									},
+									block.dimension,
+									"test:red",
+								);
+							};
+							
+							return player.sendMessage("Blocks in the direction!");
+						};
+						
+						if (
+							player.getItemCount( "lunar:silicon_crystal" ) < 16
+							|| player.getItemCount( "lunar:cpu" ) < 1
+							|| player.getItemCount( "lunar:steel_sheet" ) < 6
+						) return player.sendMessage( "§cNot enough items!§r" );
+					
+						player.runCommandAsync( "clear @s lunar:silicon_crystal 0 16" );
+						player.runCommandAsync( "clear @s lunar:cpu 0 1" );
+						player.runCommandAsync( "clear @s lunar:steel_sheet 0 6" );
+						
+						block.setType(MinecraftBlockTypes.air);
+						player.runCommandAsync(
+                            "structure load ecli_battery "
+                            + (block.location.x - 2) + " "
+                            + (block.location.y - 1) + " "
+                            + (block.location.z - 6)
+							+ " 270_degrees none block_by_block 5"
                         );
                     };
                 break;
