@@ -20,7 +20,8 @@
 			"concrete_foundation:gravel_air",
 			"concrete_foundation:water_air",
 			"concrete_foundation:dirt_air",
-			"concrete_foundation:lava_air"
+			"concrete_foundation:lava_air",
+			"concrete_foundation:sandstone_air"
 		]
 	}
 }
