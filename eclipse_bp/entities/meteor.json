@@ -137,9 +137,31 @@
         }
       },
       "minecraft:explode": {
-        "add": {
-          "component_groups": ["minecraft:exploding"]
-        }
+	  "sequence": [
+	    {
+	      "randomize": [
+	        {
+		    "weight": 7,
+		    "run_command": {
+		      "command": "structure load smallcrater1 ~-31 ~-15 ~-31"
+		    }
+	        },
+	        {
+		    "weight": 3,
+		    "run_command": {
+		      "command": "structure load bigcrater1 ~-63 ~-31 ~-63"
+		    }
+	        }
+	      ]
+	    },
+	    {
+            "add": {
+              "component_groups": [
+                "minecraft:exploding"
+              ]
+            }
+	    }
+	  ]
       },
       "meteor:trigger_death": {
         "add": {
