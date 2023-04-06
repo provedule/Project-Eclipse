@@ -22,38 +22,9 @@ world.events.beforeExplosion.subscribe((event) => {
   const blocks = event.getImpactedBlocks().map((coord) => findAirBlock(coord, event.dimension));
   event.setImpactedBlocks(blocks);
 
-  // asteroid
-  const asteroid = dimension.spawnEntity('eclipse:asteroid', location);
-  for (const player of dimension.getPlayers({ closest: 75 })) {
-    player.playSound('mob.warden.emerge');
-  };
-  // slow falling incase it blows up in the air
-  asteroid.addEffect(MinecraftEffectTypes.slowFalling, 10, 1, false);
+  world.playSound("asteroid.explode", {
+    location: coord,
+    volume: 100
+  })
 
-  const id = system.runInterval(() => {
-    /**
-     * @type {EntityScaleComponent}
-     */
-    const scale = asteroid.getComponent(EntityScaleComponent.componentId);
-    const closest = scale.value / 2.25;
-
-    (async () => {
-      for (const player of dimension.getPlayers({ closest: closest * 4 })) {
-        const distance = Vector.subtract(player.location, asteroid.location).length();
-        const amplifer = closest / distance * 10;
-        player.runCommandAsync(`camerashake add @s ${amplifer > 4 ? 4 : amplifer} 0.05`)
-      };
-    })().catch(console.log);
-
-    (async () => {
-      for (const player of dimension.getPlayers({ closest })) {
-        const effects = player.getEffects();
-        if (effects.findIndex(effect => effect.displayName === MinecraftEffectTypes.darkness.getName()) === -1) {
-          player.addEffect(MinecraftEffectTypes.darkness, TicksPerSecond, 0, false);
-        }
-      };
-    })().catch(console.log);
-  });
-
-  system.runTimeout(() => system.clearRun(id), 7 * TicksPerSecond);
 });
