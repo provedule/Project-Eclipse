@@ -7,21 +7,12 @@
         "default": "fireball"
       },
       "textures": {
-        "default": "textures/items/fireball"
+        "default": "textures/items/asteroid"
       },
       "geometry": {
-        "default": "geometry.fireball"
+        "default": "geometry.asteroid"
       },
-      "animations": {
-        "face_player": "animation.actor.billboard"
-      },
-      "scripts": {
-        "scale": "2.0",
-        "animate": [
-          "face_player"
-        ]
-      },
-      "render_controllers": [ "controller.render.fireball" ]
+      "render_controllers": [ "controller.render.asteroid" ]
     }
   }
 }
