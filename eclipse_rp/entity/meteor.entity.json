@@ -7,7 +7,7 @@
         "default": "fireball"
       },
       "textures": {
-        "default": "textures/items/asteroid"
+        "default": "textures/entity/asteroid"
       },
       "geometry": {
         "default": "geometry.asteroid"
